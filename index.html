@@ -195,20 +195,35 @@
     display: grid;
     grid-template-columns: 1.2fr 1fr;
     gap: 32px;
-    align-items: start;
+    align-items: stretch;
   }
   .hero-main {
     position: relative;
+    overflow: hidden;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    border-radius: 8px;
   }
   .hero-image {
+    position: absolute;
+    inset: 0;
     width: 100%;
-    aspect-ratio: 2/1;
+    height: 100%;
     object-fit: cover;
-    border-radius: 8px;
-    display: block;
+    opacity: 0.35;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,10,10,0.95) 35%, rgba(10,10,10,0.2) 100%);
   }
   .hero-content {
-    margin-top: 16px;
+    position: relative;
+    z-index: 2;
+    padding: 36px;
+    margin-top: 0;
   }
   .tag {
     font-family: 'JetBrains Mono', monospace;
@@ -716,6 +731,7 @@
     <div class="hero-grid">
       <div class="hero-main">
         <img class="hero-image" src="https://picsum.photos/seed/motogp-hero/900/500" alt="Marc Marquez at Jerez">
+        <div class="hero-overlay"></div>
         <div class="hero-content">
           <span class="tag tag-motogp">MotoGP · Round 3</span>
           <h1 class="hero-title">Marc Marquez <em>Storms To Pole</em> At Jerez</h1>

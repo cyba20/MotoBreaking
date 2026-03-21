@@ -1,308 +1,1042 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MotoBreaking – Breaking Motorcycle News</title>
-  <meta name="description" content="The fastest source for breaking motorcycle news, reviews, and racing updates from around the world.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --red: #E02020; --red-dark: #B01818; --black: #0A0A0A; --dark: #111111; --dark2: #1A1A1A; --gray: #888; --white: #FFFFFF; }
-    html { scroll-behavior: smooth; }
-    body { background: var(--black); color: var(--white); font-family: 'Barlow', sans-serif; overflow-x: hidden; }
-    a { text-decoration: none; color: inherit; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MotoBreaking – Breaking Motorcycle News</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #111111;
+    --bg-card: #161616;
+    --bg-card-hover: #1c1c1c;
+    --bg-elevated: #1a1a1a;
+    --text-primary: #f0f0f0;
+    --text-secondary: #a0a0a0;
+    --text-muted: #666;
+    --accent: #e31937;
+    --accent-hover: #ff2244;
+    --accent-dark: #b8152d;
+    --border: #222;
+    --border-light: #2a2a2a;
+    --tag-motogp: #e31937;
+    --tag-newmodel: #2d8cf0;
+    --tag-industry: #f5a623;
+    --tag-electric: #22c55e;
+    --tag-review: #a855f7;
+    --tag-culture: #ec4899;
+    --tag-wsbk: #f97316;
+    --tag-bsb: #06b6d4;
+  }
 
-    header { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 64px; background: rgba(10,10,10,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(224,32,32,0.3); }
-    .logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 26px; letter-spacing: -0.5px; color: var(--white); }
-    .logo span { color: var(--red); }
-    .header-date { font-size: 14px; color: var(--gray); }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    .ticker-wrap { background: var(--red); overflow: hidden; white-space: nowrap; padding: 9px 0; }
-    .ticker { display: inline-block; animation: ticker 28s linear infinite; }
-    .ticker span { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: white; margin: 0 36px; }
-    .ticker span::before { content: '//'; margin-right: 10px; opacity: 0.6; }
-    @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Source Sans 3', -apple-system, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
 
-    /* HERO */
-    .hero-grid { display: grid; grid-template-columns: 2fr 1fr; border-bottom: 1px solid rgba(255,255,255,0.06); }
-    .hero-main { position: relative; overflow: hidden; cursor: pointer; min-height: 480px; display: flex; flex-direction: column; justify-content: flex-end; }
-    .hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.35; }
-    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,10,0.98) 40%, rgba(10,10,10,0.3) 100%); }
-    .hero-content { position: relative; z-index: 2; padding: 48px 40px; }
-    .hero-tag { display: inline-flex; align-items: center; gap: 8px; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 16px; }
-    .hero-tag::before { content: ''; width: 28px; height: 2px; background: var(--red); }
-    .hero-main h1 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: clamp(36px, 5vw, 60px); line-height: 0.95; letter-spacing: -1px; text-transform: uppercase; margin-bottom: 16px; }
-    .hero-main h1 em { font-style: normal; color: var(--red); display: block; }
-    .hero-desc { font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.6); max-width: 520px; margin-bottom: 20px; }
-    .hero-meta { font-size: 12px; color: var(--gray); display: flex; gap: 14px; align-items: center; }
-    .hero-meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--red); }
-    .read-more { display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--red); border-bottom: 1px solid rgba(224,32,32,0.4); padding-bottom: 2px; cursor: pointer; transition: opacity .2s; }
-    .read-more:hover { opacity: 0.7; }
+  a { color: inherit; text-decoration: none; }
 
-    .hero-sidebar { padding: 32px; display: flex; flex-direction: column; border-left: 1px solid rgba(255,255,255,0.06); }
-    .sidebar-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.06); }
-    .sb-item { padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer; transition: opacity .2s; }
-    .sb-item:last-child { border-bottom: none; }
-    .sb-item:hover { opacity: 0.6; }
-    .sb-cat { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--red); margin-bottom: 5px; }
-    .sb-title { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; line-height: 1.2; color: var(--white); text-transform: uppercase; }
-    .sb-meta { font-size: 11px; color: var(--gray); margin-top: 4px; }
+  /* ─── TICKER ─── */
+  .ticker-wrap {
+    background: var(--accent);
+    overflow: hidden;
+    height: 36px;
+    position: relative;
+  }
+  .ticker {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    animation: ticker 40s linear infinite;
+    white-space: nowrap;
+  }
+  .ticker-item {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 0 32px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .ticker-item::before {
+    content: '●';
+    font-size: 6px;
+    opacity: 0.6;
+  }
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
 
-    /* SECTION */
-    .section-wrap { padding: 48px 40px 0; }
-    .section-label { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--red); display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
-    .section-label::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.06); }
+  /* ─── HEADER ─── */
+  header {
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-primary);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .logo span { color: var(--accent); }
+  .logo-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
 
-    /* TOP STORIES */
-    .story-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255,255,255,0.06); }
-    .story-col { background: var(--black); cursor: pointer; transition: opacity .2s; overflow: hidden; }
-    .story-col:hover { opacity: 0.8; }
-    .story-img { width: 100%; height: 200px; object-fit: cover; display: block; opacity: 0.8; }
-    .story-body { padding: 20px 20px 24px; }
-    .story-cat { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--red); margin-bottom: 8px; }
-    .story-title { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; text-transform: uppercase; line-height: 1.05; color: var(--white); margin-bottom: 8px; }
-    .story-desc { font-size: 14px; line-height: 1.65; color: rgba(255,255,255,0.5); margin-bottom: 10px; }
-    .story-meta { font-size: 11px; color: var(--gray); }
+  nav { display: flex; align-items: center; gap: 0; }
+  nav a {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    padding: 22px 16px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  nav a:hover, nav a.active {
+    color: var(--text-primary);
+    border-bottom-color: var(--accent);
+  }
 
-    /* MORE NEWS */
-    .two-col-wrap { padding: 48px 40px; }
-    .feat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; }
-    .feat-list { display: flex; flex-direction: column; }
-    .feat-item { display: grid; grid-template-columns: 52px 100px 1fr; gap: 16px; padding: 22px 0; border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer; transition: opacity .2s; align-items: start; }
-    .feat-item:hover { opacity: 0.7; }
-    .feat-item:first-child { padding-top: 0; }
-    .feat-num { font-family: 'Barlow Condensed', sans-serif; font-size: 36px; font-weight: 900; color: rgba(255,255,255,0.35); line-height: 1; }
-    .feat-thumb { width: 100px; height: 68px; object-fit: cover; display: block; opacity: 0.85; flex-shrink: 0; }
-    .feat-cat { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--red); margin-bottom: 5px; }
-    .feat-title { font-family: 'Barlow Condensed', sans-serif; font-size: 17px; font-weight: 800; text-transform: uppercase; line-height: 1.1; color: var(--white); margin-bottom: 5px; }
-    .feat-desc { font-size: 13px; line-height: 1.6; color: var(--gray); }
-    .feat-meta { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 5px; }
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .search-btn {
+    background: none;
+    border: 1px solid var(--border-light);
+    color: var(--text-secondary);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+  .search-btn:hover { border-color: var(--text-muted); color: var(--text-primary); }
+  .search-btn kbd {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    background: var(--bg-card);
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 1px solid var(--border-light);
+  }
 
-    /* RACING */
-    .racing-band { background: var(--dark); padding: 48px 40px; border-top: 1px solid rgba(255,255,255,0.04); }
-    .racing-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid rgba(255,255,255,0.06); }
-    .racing-item { padding: 28px 28px 0 0; border-right: 1px solid rgba(255,255,255,0.06); cursor: pointer; transition: opacity .2s; }
-    .racing-item:hover { opacity: 0.7; }
-    .racing-item:last-child { border-right: none; padding-right: 0; }
-    .racing-item:not(:first-child) { padding-left: 28px; }
-    .racing-cat { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--red); margin-bottom: 10px; }
-    .racing-title { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; text-transform: uppercase; line-height: 1.05; color: var(--white); margin-bottom: 10px; }
-    .racing-desc { font-size: 15px; line-height: 1.65; color: var(--gray); }
-    .racing-meta { font-size: 11px; color: rgba(255,255,255,0.25); margin-top: 12px; }
+  /* ─── MAIN LAYOUT ─── */
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
 
-    /* STATS */
-    .stats-strip { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid rgba(255,255,255,0.06); }
-    .stat-item { padding: 28px 40px; border-right: 1px solid rgba(255,255,255,0.06); }
-    .stat-item:last-child { border-right: none; }
-    .stat-num { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 40px; line-height: 1; color: var(--white); letter-spacing: -1px; }
-    .stat-num span { color: var(--red); }
-    .stat-label { font-size: 11px; color: var(--gray); letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
+  /* ─── HERO SECTION (Verge style) ─── */
+  .hero {
+    padding: 32px 0 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+  .hero-main {
+    position: relative;
+  }
+  .hero-image {
+    width: 100%;
+    aspect-ratio: 2/1;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+  }
+  .hero-content {
+    margin-top: 16px;
+  }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 3px;
+    display: inline-block;
+    color: #fff;
+  }
+  .tag-motogp { background: var(--tag-motogp); }
+  .tag-newmodel { background: var(--tag-newmodel); }
+  .tag-industry { background: var(--tag-industry); color: #111; }
+  .tag-electric { background: var(--tag-electric); color: #111; }
+  .tag-review { background: var(--tag-review); }
+  .tag-culture { background: var(--tag-culture); }
+  .tag-wsbk { background: var(--tag-wsbk); }
+  .tag-bsb { background: var(--tag-bsb); }
 
-    /* FOOTER */
-    footer { padding: 48px 40px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: flex-start; }
-    .footer-logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 22px; color: var(--white); margin-bottom: 12px; }
-    .footer-logo span { color: var(--red); }
-    .footer-desc { font-size: 13px; line-height: 1.7; color: var(--gray); max-width: 260px; }
-    .footer-col-title { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--red); margin-bottom: 18px; }
-    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .footer-links a { font-size: 13px; color: var(--gray); transition: color .2s; }
-    .footer-links a:hover { color: var(--white); }
-    .footer-bottom { padding: 16px 40px; border-top: 1px solid rgba(255,255,255,0.04); display: flex; justify-content: space-between; }
-    .footer-bottom p { font-size: 11px; color: rgba(255,255,255,0.2); }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    line-height: 1.0;
+    letter-spacing: 1px;
+    margin: 10px 0;
+    color: var(--text-primary);
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-excerpt {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    max-width: 520px;
+  }
+  .hero-meta {
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-meta .time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+  }
 
-    @media (max-width: 900px) {
-      header { padding: 0 20px; }
-      .hero-grid { grid-template-columns: 1fr; }
-      .hero-content { padding: 32px 20px; }
-      .hero-sidebar { padding: 24px 20px; }
-      .section-wrap { padding: 32px 20px 0; }
-      .story-grid { grid-template-columns: 1fr; gap: 0; background: none; }
-      .story-col { border-bottom: 1px solid rgba(255,255,255,0.06); }
-      .two-col-wrap { padding: 32px 20px; }
-      .feat-grid { grid-template-columns: 1fr; }
-      .feat-item { grid-template-columns: 40px 80px 1fr; gap: 12px; }
-      .feat-thumb { width: 80px; height: 56px; }
-      .racing-band { padding: 32px 20px; }
-      .racing-grid { grid-template-columns: 1fr; }
-      .racing-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 20px 0; }
-      .stats-strip { grid-template-columns: repeat(2, 1fr); }
-      footer { padding: 32px 20px; flex-direction: column; gap: 28px; }
-      .footer-bottom { padding: 16px 20px; flex-direction: column; gap: 6px; }
-    }
-  </style>
+  /* Hero sidebar stories (Verge stacked) */
+  .hero-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .hero-side-item {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 130px;
+    gap: 18px;
+    align-items: start;
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+  .hero-side-item:first-child { padding-top: 0; }
+  .hero-side-item:last-child { border-bottom: none; }
+  .hero-side-item:hover .hero-side-title { color: var(--accent); }
+
+  .hero-side-tag { margin-bottom: 6px; }
+  .hero-side-title {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.35;
+    transition: color 0.2s;
+  }
+  .hero-side-meta {
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .hero-side-img {
+    width: 130px;
+    height: 88px;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+
+  /* ─── SECTION HEADER ─── */
+  .section {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-title::before {
+    content: '';
+    width: 4px;
+    height: 24px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  .section-link {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: gap 0.2s;
+  }
+  .section-link:hover { gap: 10px; }
+  .section-link::after { content: '→'; }
+
+  /* ─── NEWS GRID (Google News style cards) ─── */
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .news-card {
+    background: var(--bg-card);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: all 0.25s;
+    cursor: pointer;
+  }
+  .news-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-light);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  }
+  .news-card-img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+  }
+  .news-card-body {
+    padding: 20px;
+  }
+  .news-card-tag { margin-bottom: 10px; }
+  .news-card-title {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 10px;
+    transition: color 0.2s;
+  }
+  .news-card:hover .news-card-title { color: var(--accent); }
+  .news-card-excerpt {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .news-card-meta {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ─── TWO-COL LAYOUT ─── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  /* ─── NUMBERED LIST (Google News style) ─── */
+  .numbered-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 48px;
+  }
+  .numbered-item {
+    display: grid;
+    grid-template-columns: 40px 1fr 100px;
+    gap: 16px;
+    align-items: start;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .numbered-item:hover { padding-left: 8px; }
+  .numbered-item:hover .numbered-item-title { color: var(--accent); }
+  .item-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    color: var(--text-muted);
+    line-height: 1;
+  }
+  .numbered-item-content {}
+  .numbered-item-tag { margin-bottom: 6px; }
+  .numbered-item-title {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.35;
+    transition: color 0.2s;
+  }
+  .numbered-item-meta {
+    margin-top: 6px;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .numbered-item-img {
+    width: 100px;
+    height: 68px;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+
+  /* ─── SIDEBAR ─── */
+  .sidebar-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .sidebar-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 1.5px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sidebar-title::before {
+    content: '';
+    width: 3px;
+    height: 18px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  /* Race results widget */
+  .race-result {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .race-result:last-child { border-bottom: none; }
+  .race-pos {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    width: 28px;
+    text-align: center;
+    color: var(--text-muted);
+  }
+  .race-pos.p1 { color: var(--accent); }
+  .race-rider { font-weight: 600; flex: 1; }
+  .race-team { color: var(--text-muted); font-size: 12px; }
+
+  /* Trending topics */
+  .trending-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: padding-left 0.2s;
+  }
+  .trending-item:hover { padding-left: 6px; }
+  .trending-item:last-child { border-bottom: none; }
+  .trending-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    min-width: 18px;
+  }
+  .trending-text {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  /* ─── RACING SECTION (Verge horizontal scroll) ─── */
+  .racing-scroll {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .racing-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .racing-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+  }
+  .racing-card:nth-child(1)::before { background: var(--tag-motogp); }
+  .racing-card:nth-child(2)::before { background: var(--tag-wsbk); }
+  .racing-card:nth-child(3)::before { background: var(--tag-bsb); }
+  .racing-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    border-color: var(--border-light);
+  }
+  .racing-card-series {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+  .racing-card-title {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 10px;
+  }
+  .racing-card:hover .racing-card-title { color: var(--accent); }
+  .racing-card-excerpt {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .racing-card-meta {
+    margin-top: 14px;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ─── LIVE BADGE ─── */
+  .live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--accent);
+    color: #fff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    border-radius: 3px;
+  }
+  .live-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: #fff;
+    border-radius: 50%;
+    animation: pulse-dot 1s ease-in-out infinite;
+  }
+
+  /* ─── STATS BAR ─── */
+  .stats-bar {
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 0;
+  }
+  .stats-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    justify-content: space-around;
+    gap: 32px;
+  }
+  .stat-item {
+    text-align: center;
+  }
+  .stat-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--accent);
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 48px 0 32px;
+    border-top: 1px solid var(--border);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+  .footer-brand .logo { margin-bottom: 12px; }
+  .footer-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .footer-heading {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 1.5px;
+    margin-bottom: 16px;
+    color: var(--text-secondary);
+  }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 10px; }
+  .footer-links a {
+    font-size: 14px;
+    color: var(--text-muted);
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-bottom {
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .news-grid { grid-template-columns: repeat(2, 1fr); }
+    .two-col { grid-template-columns: 1fr; }
+    .racing-scroll { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: repeat(2, 1fr); }
+    nav { display: none; }
+  }
+  @media (max-width: 640px) {
+    .hero-title { font-size: 36px; }
+    .news-grid { grid-template-columns: 1fr; }
+    .racing-scroll { grid-template-columns: 1fr; }
+    .numbered-list { grid-template-columns: 1fr; }
+    .numbered-item { grid-template-columns: 32px 1fr; }
+    .numbered-item-img { display: none; }
+    .stats-inner { flex-wrap: wrap; }
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
 <body>
 
-  <header>
-    <a href="/" class="logo">MOTO<span>BREAKING</span></a>
-    <span class="header-date">Saturday, 21 March 2026</span>
-  </header>
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <div class="ticker-item">Marquez takes pole at Jerez</div>
+    <div class="ticker-item">Ducati Panigale V4 R revealed</div>
+    <div class="ticker-item">KTM restructuring approved</div>
+    <div class="ticker-item">Yamaha confirms new R1 for 2026</div>
+    <div class="ticker-item">MotoGP Round 3 race preview</div>
+    <div class="ticker-item">Honda CBR1000RR-R updated</div>
+    <div class="ticker-item">Triumph Street Triple RS wins best naked</div>
+    <div class="ticker-item">Marquez takes pole at Jerez</div>
+    <div class="ticker-item">Ducati Panigale V4 R revealed</div>
+    <div class="ticker-item">KTM restructuring approved</div>
+    <div class="ticker-item">Yamaha confirms new R1 for 2026</div>
+    <div class="ticker-item">MotoGP Round 3 race preview</div>
+    <div class="ticker-item">Honda CBR1000RR-R updated</div>
+    <div class="ticker-item">Triumph Street Triple RS wins best naked</div>
+  </div>
+</div>
 
-  <div class="ticker-wrap"><div class="ticker">
-    <span>Marquez takes pole at Jerez</span><span>Ducati Panigale V4 R revealed</span><span>KTM restructuring approved</span><span>Yamaha confirms new R1 for 2026</span><span>MotoGP Round 3 race preview</span><span>Honda CBR1000RR-R updated</span><span>Triumph Street Triple RS wins best naked</span><span>Marquez takes pole at Jerez</span><span>Ducati Panigale V4 R revealed</span><span>KTM restructuring approved</span><span>Yamaha confirms new R1 for 2026</span><span>MotoGP Round 3 race preview</span><span>Honda CBR1000RR-R updated</span><span>Triumph Street Triple RS wins best naked</span>
-  </div></div>
-
-  <!-- HERO -->
-  <div class="hero-grid">
-    <div class="hero-main">
-      <img class="hero-img" src="https://picsum.photos/seed/motogp/1200/600" alt="MotoGP racing">
-      <div class="hero-overlay"></div>
-      <div class="hero-content">
-        <div class="hero-tag">Top Story · MotoGP · Round 3</div>
-        <h1>Marc Marquez<em>Storms To Pole</em>At Jerez</h1>
-        <p class="hero-desc">The Ducati Lenovo rider delivered a stunning final flying lap in Q2 to claim his first pole position of the 2026 season, edging world champion Francesco Bagnaia by just 0.042 seconds.</p>
-        <div class="hero-meta">
-          <span>MotoBreaking Staff</span><div class="hero-meta-dot"></div>
-          <span>2 hours ago</span><div class="hero-meta-dot"></div>
-          <span>6 min read</span>
-        </div>
-        <div class="read-more">Read Full Story →</div>
-      </div>
-    </div>
-    <div class="hero-sidebar">
-      <div class="sidebar-label">Latest Updates</div>
-      <div class="sb-item"><div class="sb-cat">New Model</div><div class="sb-title">Ducati Reveals Panigale V4 R With New Aero Package</div><div class="sb-meta">3 hours ago</div></div>
-      <div class="sb-item"><div class="sb-cat">Industry</div><div class="sb-title">KTM Creditors Approve Restructuring Plan</div><div class="sb-meta">5 hours ago</div></div>
-      <div class="sb-item"><div class="sb-cat">Electric</div><div class="sb-title">Zero SR/S Launches With 200-Mile Claimed Range</div><div class="sb-meta">7 hours ago</div></div>
-      <div class="sb-item"><div class="sb-cat">Reviews</div><div class="sb-title">Triumph Street Triple RS — 10,000 Mile Long-Term Test</div><div class="sb-meta">Yesterday</div></div>
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">
+      MOTO<span>BREAKING</span>
+      <div class="logo-dot"></div>
+    </a>
+    <nav>
+      <a href="#" class="active">Home</a>
+      <a href="#">MotoGP</a>
+      <a href="#">New Models</a>
+      <a href="#">Reviews</a>
+      <a href="#">Electric</a>
+      <a href="#">Racing</a>
+      <a href="#">Industry</a>
+    </nav>
+    <div class="header-actions">
+      <button class="search-btn">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="5"/><line x1="10" y1="10" x2="13" y2="13"/></svg>
+        Search
+        <kbd>⌘K</kbd>
+      </button>
     </div>
   </div>
+</header>
 
-  <!-- TOP STORIES -->
-  <div class="section-wrap">
-    <div class="section-label">Top Stories Today</div>
-    <div class="story-grid">
-      <div class="story-col">
-        <img class="story-img" src="https://picsum.photos/seed/yamaha/600/300" alt="Yamaha motorcycle">
-        <div class="story-body">
-          <div class="story-cat">New Model</div>
-          <div class="story-title">Yamaha Confirms All-New R1 For 2026</div>
-          <p class="story-desc">Yamaha officially confirms next-gen YZF-R1 with revised crossplane inline-four producing over 200hp and completely redesigned chassis.</p>
-          <div class="story-meta">4 hours ago · 4 min read</div>
+<!-- HERO -->
+<div class="container">
+  <div class="hero">
+    <div class="hero-grid">
+      <div class="hero-main">
+        <img class="hero-image" src="https://picsum.photos/seed/motogp-hero/900/500" alt="Marc Marquez at Jerez">
+        <div class="hero-content">
+          <span class="tag tag-motogp">MotoGP · Round 3</span>
+          <h1 class="hero-title">Marc Marquez <em>Storms To Pole</em> At Jerez</h1>
+          <p class="hero-excerpt">The Ducati Lenovo rider delivered a stunning final flying lap in Q2 to claim his first pole position of the 2026 season, edging world champion Francesco Bagnaia by just 0.042 seconds.</p>
+          <div class="hero-meta">
+            <span class="time">2 hours ago</span>
+            <span>·</span>
+            <span>MotoBreaking Staff</span>
+            <span>·</span>
+            <span>6 min read</span>
+          </div>
         </div>
       </div>
-      <div class="story-col">
-        <img class="story-img" src="https://picsum.photos/seed/honda/600/300" alt="Honda motorcycle">
-        <div class="story-body">
-          <div class="story-cat">Industry</div>
-          <div class="story-title">Honda Posts Record European Sales As Adventure Demand Surges</div>
-          <p class="story-desc">14% year-on-year increase driven by strong Africa Twin and CB500 demand across UK, Germany and France.</p>
-          <div class="story-meta">6 hours ago · 3 min read</div>
+      <div class="hero-sidebar">
+        <div class="hero-side-item">
+          <div>
+            <div class="hero-side-tag"><span class="tag tag-newmodel">New Model</span></div>
+            <div class="hero-side-title">Ducati Reveals Panigale V4 R With New Aero Package</div>
+            <div class="hero-side-meta">3 hours ago</div>
+          </div>
+          <img class="hero-side-img" src="https://picsum.photos/seed/ducati-v4r/200/136" alt="">
         </div>
-      </div>
-      <div class="story-col">
-        <img class="story-img" src="https://picsum.photos/seed/electric/600/300" alt="Electric motorcycle">
-        <div class="story-body">
-          <div class="story-cat">Electric</div>
-          <div class="story-title">Energica Experia Gets 30% Range Boost In 2026 Update</div>
-          <p class="story-desc">Major battery upgrade pushes real-world range to over 250 miles — a landmark moment for electric adventure touring.</p>
-          <div class="story-meta">8 hours ago · 3 min read</div>
+        <div class="hero-side-item">
+          <div>
+            <div class="hero-side-tag"><span class="tag tag-industry">Industry</span></div>
+            <div class="hero-side-title">KTM Creditors Approve Restructuring Plan</div>
+            <div class="hero-side-meta">5 hours ago</div>
+          </div>
+          <img class="hero-side-img" src="https://picsum.photos/seed/ktm-2026/200/136" alt="">
         </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MORE NEWS -->
-  <div class="two-col-wrap">
-    <div>
-      <div class="section-label">More News</div>
-      <div class="feat-grid">
-        <div class="feat-list">
-          <div class="feat-item">
-            <div class="feat-num">01</div>
-            <img class="feat-thumb" src="https://picsum.photos/seed/moto1/200/120" alt="">
-            <div><div class="feat-cat">MotoGP</div><div class="feat-title">Bagnaia Says He Has "No Excuses" After Jerez Qualifying</div><p class="feat-desc">The reigning world champion remained philosophical after being pipped to pole, insisting his race pace is stronger heading into Sunday.</p><div class="feat-meta">1 hour ago · 3 min read</div></div>
+        <div class="hero-side-item">
+          <div>
+            <div class="hero-side-tag"><span class="tag tag-electric">Electric</span></div>
+            <div class="hero-side-title">Zero SR/S Launches With 200-Mile Claimed Range</div>
+            <div class="hero-side-meta">7 hours ago</div>
           </div>
-          <div class="feat-item">
-            <div class="feat-num">02</div>
-            <img class="feat-thumb" src="https://picsum.photos/seed/moto2/200/120" alt="">
-            <div><div class="feat-cat">New Model</div><div class="feat-title">BMW M 1000 RR Competition Gets Revised Electronics For 2026</div><p class="feat-desc">Updated traction control, new Öhlins settings and fresh colour scheme for BMW's flagship superbike.</p><div class="feat-meta">4 hours ago · 4 min read</div></div>
-          </div>
-          <div class="feat-item">
-            <div class="feat-num">03</div>
-            <img class="feat-thumb" src="https://picsum.photos/seed/moto3/200/120" alt="">
-            <div><div class="feat-cat">Reviews</div><div class="feat-title">Kawasaki ZX-10R 2026 First Ride — Sharper, Faster, More Focused</div><p class="feat-desc">Two days at Portimão with Kawasaki's updated litre-class weapon before it hits UK showrooms in April.</p><div class="feat-meta">6 hours ago · 8 min read</div></div>
-          </div>
-          <div class="feat-item">
-            <div class="feat-num">04</div>
-            <img class="feat-thumb" src="https://picsum.photos/seed/moto4/200/120" alt="">
-            <div><div class="feat-cat">Industry</div><div class="feat-title">Harley-Davidson Q1 Profits Drop Amid US Tariff Uncertainty</div><p class="feat-desc">9% decline in quarterly earnings as import tariffs affect both domestic production and European exports.</p><div class="feat-meta">8 hours ago · 3 min read</div></div>
-          </div>
-          <div class="feat-item">
-            <div class="feat-num">05</div>
-            <img class="feat-thumb" src="https://picsum.photos/seed/moto5/200/120" alt="">
-            <div><div class="feat-cat">Electric</div><div class="feat-title">LiveWire ONE Gets £1,500 Price Cut As EV Competition Grows</div><p class="feat-desc">Harley's electric sub-brand reduces flagship model price as European EV motorcycle market heats up.</p><div class="feat-meta">Yesterday · 2 min read</div></div>
-          </div>
+          <img class="hero-side-img" src="https://picsum.photos/seed/zero-srs/200/136" alt="">
         </div>
-        <div class="feat-list">
-          <div class="feat-item">
-            <div class="feat-num">06</div>
-            <img class="feat-thumb" src="https://picsum.photos/seed/moto6/200/120" alt="">
-            <div><div class="feat-cat">MotoGP</div><div class="feat-title">Jorge Martin Confirmed For Jerez Race Start After Injury Scare</div><p class="feat-desc">The Aprilia rider was cleared by medical staff after a heavy practice crash, and will line up on the grid for Sunday's race.</p><div class="feat-meta">1 hour ago · 2 min read</div></div>
+        <div class="hero-side-item">
+          <div>
+            <div class="hero-side-tag"><span class="tag tag-review">Review</span></div>
+            <div class="hero-side-title">Triumph Street Triple RS — 10,000 Mile Long-Term Test</div>
+            <div class="hero-side-meta">Yesterday</div>
           </div>
-          <div class="feat-item">
-            <div class="feat-num">07</div>
-            <img class="feat-thumb" src="https://picsum.photos/seed/moto7/200/120" alt="">
-            <div><div class="feat-cat">New Model</div><div class="feat-title">Aprilia RS 660 Trofeo Confirmed For 2026 Racing Season</div><p class="feat-desc">Aprilia expands its one-make racing series with a revised RS 660 Trofeo featuring updated suspension and new safety electronics.</p><div class="feat-meta">3 hours ago · 3 min read</div></div>
-          </div>
-          <div class="feat-item">
-            <div class="feat-num">08</div>
-            <img class="feat-thumb" src="https://picsum.photos/seed/moto8/200/120" alt="">
-            <div><div class="feat-cat">Culture</div><div class="feat-title">Isle Of Man TT 2026 — Record 300 Riders Confirmed For Entry List</div><p class="feat-desc">Organisers have confirmed a record entry list with 300 riders from 40 countries set to compete across all classes.</p><div class="feat-meta">4 hours ago · 3 min read</div></div>
-          </div>
-          <div class="feat-item">
-            <div class="feat-num">09</div>
-            <img class="feat-thumb" src="https://picsum.photos/seed/moto2/200/120" alt="">
-            <div><div class="feat-cat">Industry</div><div class="feat-title">Piaggio Group Acquires MV Agusta In Surprise Deal</div><p class="feat-desc">The Italian conglomerate has completed a surprise acquisition of MV Agusta, promising to invest in new model development globally.</p><div class="feat-meta">Yesterday · 4 min read</div></div>
-          </div>
-          <div class="feat-item">
-            <div class="feat-num">10</div>
-            <img class="feat-thumb" src="https://picsum.photos/seed/moto5/200/120" alt="">
-            <div><div class="feat-cat">Electric</div><div class="feat-title">Arc Vector Electric Superbike Enters Limited Production</div><p class="feat-desc">British startup Arc has confirmed its Vector electric superbike is entering limited production, with first deliveries expected later this year.</p><div class="feat-meta">Yesterday · 3 min read</div></div>
-          </div>
+          <img class="hero-side-img" src="https://picsum.photos/seed/triumph-rs/200/136" alt="">
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- RACING -->
-  <div class="racing-band">
-    <div class="section-label">Racing Coverage</div>
-    <div class="racing-grid">
-      <div class="racing-item"><div class="racing-cat">MotoGP · Round 3</div><div class="racing-title">Jerez Race Preview — Can Anyone Stop Ducati?</div><p class="racing-desc">Sunday's grand prix sets up as a fascinating tactical battle. Marquez has pole but Bagnaia has stronger race pace. We break down every scenario.</p><div class="racing-meta">Today · 5 min read</div></div>
-      <div class="racing-item"><div class="racing-cat">World Superbike</div><div class="racing-title">Rea Closes Gap With Dominant Assen Double Win</div><p class="racing-desc">Jonathan Rea swept both WSBK races at Assen to close to within 18 points of Bautista heading into the summer break.</p><div class="racing-meta">Yesterday · 4 min read</div></div>
-      <div class="racing-item"><div class="racing-cat">British Superbike</div><div class="racing-title">BSB Brands Hatch — Iddon Wins In Chaotic Opener</div><p class="racing-desc">Iddon capitalised on a dramatic last-lap crash to claim a surprise opening round victory at the Indy circuit.</p><div class="racing-meta">2 days ago · 3 min read</div></div>
+<!-- TOP STORIES CARDS -->
+<div class="container">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">TOP STORIES</div>
+      <a href="#" class="section-link">View all</a>
+    </div>
+    <div class="news-grid">
+      <div class="news-card">
+        <img class="news-card-img" src="https://picsum.photos/seed/yamaha-r1/600/338" alt="">
+        <div class="news-card-body">
+          <div class="news-card-tag"><span class="tag tag-newmodel">New Model</span></div>
+          <div class="news-card-title">Yamaha Confirms All-New R1 For 2026</div>
+          <div class="news-card-excerpt">Yamaha officially confirms next-gen YZF-R1 with revised crossplane inline-four producing over 200hp and completely redesigned chassis.</div>
+          <div class="news-card-meta">
+            <span>4 hours ago</span>
+            <span>4 min read</span>
+          </div>
+        </div>
+      </div>
+      <div class="news-card">
+        <img class="news-card-img" src="https://picsum.photos/seed/honda-sales/600/338" alt="">
+        <div class="news-card-body">
+          <div class="news-card-tag"><span class="tag tag-industry">Industry</span></div>
+          <div class="news-card-title">Honda Posts Record European Sales As Adventure Demand Surges</div>
+          <div class="news-card-excerpt">14% year-on-year increase driven by strong Africa Twin and CB500 demand across UK, Germany and France.</div>
+          <div class="news-card-meta">
+            <span>6 hours ago</span>
+            <span>3 min read</span>
+          </div>
+        </div>
+      </div>
+      <div class="news-card">
+        <img class="news-card-img" src="https://picsum.photos/seed/energica-2026/600/338" alt="">
+        <div class="news-card-body">
+          <div class="news-card-tag"><span class="tag tag-electric">Electric</span></div>
+          <div class="news-card-title">Energica Experia Gets 30% Range Boost In 2026 Update</div>
+          <div class="news-card-excerpt">Major battery upgrade pushes real-world range to over 250 miles — a landmark moment for electric adventure touring.</div>
+          <div class="news-card-meta">
+            <span>8 hours ago</span>
+            <span>3 min read</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+</div>
 
-  <!-- STATS -->
-  <div class="stats-strip">
-    <div class="stat-item"><div class="stat-num">24<span>/7</span></div><div class="stat-label">Live Coverage</div></div>
-    <div class="stat-item"><div class="stat-num">10<span>+</span></div><div class="stat-label">News Sources</div></div>
-    <div class="stat-item"><div class="stat-num">5<span>x</span></div><div class="stat-label">Daily Updates</div></div>
-    <div class="stat-item"><div class="stat-num">WORLD<span>WIDE</span></div><div class="stat-label">Global Coverage</div></div>
+<!-- TWO COLUMN: Numbered list + Sidebar -->
+<div class="container">
+  <div class="section">
+    <div class="two-col">
+      <div>
+        <div class="section-header">
+          <div class="section-title">MORE NEWS</div>
+        </div>
+        <div class="numbered-list">
+          <div class="numbered-item">
+            <div class="item-num">01</div>
+            <div class="numbered-item-content">
+              <div class="numbered-item-tag"><span class="tag tag-motogp">MotoGP</span></div>
+              <div class="numbered-item-title">Bagnaia Says He Has "No Excuses" After Jerez Qualifying</div>
+              <div class="numbered-item-meta">1 hour ago · 3 min read</div>
+            </div>
+            <img class="numbered-item-img" src="https://picsum.photos/seed/bagnaia-q/200/136" alt="">
+          </div>
+          <div class="numbered-item">
+            <div class="item-num">06</div>
+            <div class="numbered-item-content">
+              <div class="numbered-item-tag"><span class="tag tag-motogp">MotoGP</span></div>
+              <div class="numbered-item-title">Jorge Martin Confirmed For Jerez Race Start After Injury Scare</div>
+              <div class="numbered-item-meta">1 hour ago · 2 min read</div>
+            </div>
+            <img class="numbered-item-img" src="https://picsum.photos/seed/martin-fit/200/136" alt="">
+          </div>
+          <div class="numbered-item">
+            <div class="item-num">02</div>
+            <div class="numbered-item-content">
+              <div class="numbered-item-tag"><span class="tag tag-newmodel">New Model</span></div>
+              <div class="numbered-item-title">BMW M 1000 RR Competition Gets Revised Electronics For 2026</div>
+              <div class="numbered-item-meta">4 hours ago · 4 min read</div>
+            </div>
+            <img class="numbered-item-img" src="https://picsum.photos/seed/bmw-m1000/200/136" alt="">
+          </div>
+          <div class="numbered-item">
+            <div class="item-num">07</div>
+            <div class="numbered-item-content">
+              <div class="numbered-item-tag"><span class="tag tag-newmodel">New Model</span></div>
+              <div class="numbered-item-title">Aprilia RS 660 Trofeo Confirmed For 2026 Racing Season</div>
+              <div class="numbered-item-meta">3 hours ago · 3 min read</div>
+            </div>
+            <img class="numbered-item-img" src="https://picsum.photos/seed/aprilia-660/200/136" alt="">
+          </div>
+          <div class="numbered-item">
+            <div class="item-num">03</div>
+            <div class="numbered-item-content">
+              <div class="numbered-item-tag"><span class="tag tag-review">Review</span></div>
+              <div class="numbered-item-title">Kawasaki ZX-10R 2026 First Ride — Sharper, Faster, More Focused</div>
+              <div class="numbered-item-meta">6 hours ago · 8 min read</div>
+            </div>
+            <img class="numbered-item-img" src="https://picsum.photos/seed/zx10r-ride/200/136" alt="">
+          </div>
+          <div class="numbered-item">
+            <div class="item-num">08</div>
+            <div class="numbered-item-content">
+              <div class="numbered-item-tag"><span class="tag tag-culture">Culture</span></div>
+              <div class="numbered-item-title">Isle Of Man TT 2026 — Record 300 Riders Confirmed For Entry List</div>
+              <div class="numbered-item-meta">4 hours ago · 3 min read</div>
+            </div>
+            <img class="numbered-item-img" src="https://picsum.photos/seed/iomtt-2026/200/136" alt="">
+          </div>
+          <div class="numbered-item">
+            <div class="item-num">04</div>
+            <div class="numbered-item-content">
+              <div class="numbered-item-tag"><span class="tag tag-industry">Industry</span></div>
+              <div class="numbered-item-title">Harley-Davidson Q1 Profits Drop Amid US Tariff Uncertainty</div>
+              <div class="numbered-item-meta">8 hours ago · 3 min read</div>
+            </div>
+            <img class="numbered-item-img" src="https://picsum.photos/seed/harley-q1/200/136" alt="">
+          </div>
+          <div class="numbered-item">
+            <div class="item-num">09</div>
+            <div class="numbered-item-content">
+              <div class="numbered-item-tag"><span class="tag tag-industry">Industry</span></div>
+              <div class="numbered-item-title">Piaggio Group Acquires MV Agusta In Surprise Deal</div>
+              <div class="numbered-item-meta">Yesterday · 4 min read</div>
+            </div>
+            <img class="numbered-item-img" src="https://picsum.photos/seed/piaggio-mv/200/136" alt="">
+          </div>
+          <div class="numbered-item">
+            <div class="item-num">05</div>
+            <div class="numbered-item-content">
+              <div class="numbered-item-tag"><span class="tag tag-electric">Electric</span></div>
+              <div class="numbered-item-title">LiveWire ONE Gets £1,500 Price Cut As EV Competition Grows</div>
+              <div class="numbered-item-meta">Yesterday · 2 min read</div>
+            </div>
+            <img class="numbered-item-img" src="https://picsum.photos/seed/livewire-cut/200/136" alt="">
+          </div>
+          <div class="numbered-item">
+            <div class="item-num">10</div>
+            <div class="numbered-item-content">
+              <div class="numbered-item-tag"><span class="tag tag-electric">Electric</span></div>
+              <div class="numbered-item-title">Arc Vector Electric Superbike Enters Limited Production</div>
+              <div class="numbered-item-meta">Yesterday · 3 min read</div>
+            </div>
+            <img class="numbered-item-img" src="https://picsum.photos/seed/arc-vector/200/136" alt="">
+          </div>
+        </div>
+      </div>
+
+
+    </div>
   </div>
+</div>
 
-  <!-- FOOTER -->
+<!-- RACING COVERAGE -->
+<div class="container">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">RACING COVERAGE</div>
+      <a href="#" class="section-link">All Racing</a>
+    </div>
+    <div class="racing-scroll">
+      <div class="racing-card">
+        <div class="racing-card-series">MotoGP · Round 3</div>
+        <div class="racing-card-title">Jerez Race Preview — Can Anyone Stop Ducati?</div>
+        <div class="racing-card-excerpt">Sunday's grand prix sets up as a fascinating tactical battle. Marquez has pole but Bagnaia has stronger race pace.</div>
+        <div class="racing-card-meta">Today · 5 min read</div>
+      </div>
+      <div class="racing-card">
+        <div class="racing-card-series">World Superbike</div>
+        <div class="racing-card-title">Rea Closes Gap With Dominant Assen Double Win</div>
+        <div class="racing-card-excerpt">Jonathan Rea swept both WSBK races at Assen to close to within 18 points heading into the summer break.</div>
+        <div class="racing-card-meta">Yesterday · 4 min read</div>
+      </div>
+      <div class="racing-card">
+        <div class="racing-card-series">British Superbike</div>
+        <div class="racing-card-title">BSB Brands Hatch — Iddon Wins In Chaotic Opener</div>
+        <div class="racing-card-excerpt">Iddon capitalised on a dramatic last-lap crash to claim a surprise opening round victory at the Indy circuit.</div>
+        <div class="racing-card-meta">2 days ago · 3 min read</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-value">24/7</div>
+      <div class="stat-label">Live Coverage</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">10+</div>
+      <div class="stat-label">News Sources</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">5×</div>
+      <div class="stat-label">Daily Updates</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">Global</div>
+      <div class="stat-label">Coverage</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="container">
   <footer>
-    <div>
-      <div class="footer-logo">MOTO<span>BREAKING</span></div>
-      <p class="footer-desc">The fastest source for breaking motorcycle news. MotoGP, new models, reviews and everything two wheels.</p>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">MOTO<span>BREAKING</span></div>
+        <p class="footer-desc">The fastest source for breaking motorcycle news. MotoGP, new models, reviews and everything two wheels.</p>
+      </div>
+      <div>
+        <div class="footer-heading">SECTIONS</div>
+        <ul class="footer-links">
+          <li><a href="#">MotoGP</a></li>
+          <li><a href="#">New Models</a></li>
+          <li><a href="#">Reviews</a></li>
+          <li><a href="#">Electric</a></li>
+          <li><a href="#">Industry</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">RACING</div>
+        <ul class="footer-links">
+          <li><a href="#">MotoGP</a></li>
+          <li><a href="#">World Superbike</a></li>
+          <li><a href="#">British Superbike</a></li>
+          <li><a href="#">Isle of Man TT</a></li>
+          <li><a href="#">Moto2 / Moto3</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">ABOUT</div>
+        <ul class="footer-links">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Advertise</a></li>
+          <li><a href="#">RSS Feed</a></li>
+        </ul>
+      </div>
     </div>
-    <div>
-      <div class="footer-col-title">About</div>
-      <ul class="footer-links">
-        <li><a href="#">About Us</a></li><li><a href="#">Contact</a></li>
-        <li><a href="#">Privacy Policy</a></li><li><a href="#">Advertise</a></li>
-      </ul>
+    <div class="footer-bottom">
+      <span>© 2026 MotoBreaking.com · All rights reserved</span>
+      <span>Breaking motorcycle news, 24/7</span>
     </div>
   </footer>
-  <div class="footer-bottom">
-    <p>© 2026 MotoBreaking.com · All rights reserved</p>
-    <p>Breaking motorcycle news, 24/7</p>
-  </div>
+</div>
 
 </body>
 </html>

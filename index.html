@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MotoBreaking – Breaking Motorcycle News</title>
+  <meta name="description" content="The fastest source for breaking motorcycle news, reviews, and racing updates from around the world.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #E02020;
+      --red-dark: #B01818;
+      --black: #0A0A0A;
+      --dark: #111111;
+      --dark2: #1A1A1A;
+      --gray: #888;
+      --light: #F0EDE8;
+      --white: #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Barlow', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 64px;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(224,32,32,0.3);
+    }
+
+    .logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 26px;
+      letter-spacing: -0.5px;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--red); }
+
+    .header-tag {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--red);
+      border: 1px solid var(--red);
+      padding: 4px 10px;
+      border-radius: 2px;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 64px 40px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Diagonal red accent */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; right: -100px;
+      width: 55%;
+      height: 100%;
+      background: linear-gradient(135deg, transparent 40%, rgba(224,32,32,0.07) 100%);
+      pointer-events: none;
+    }
+
+    /* Big background number */
+    .hero-bg-text {
+      position: absolute;
+      right: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(200px, 28vw, 400px);
+      line-height: 1;
+      color: rgba(255,255,255,0.025);
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: -10px;
+    }
+
+    .hero-inner {
+      max-width: 780px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 24px;
+    }
+
+    .hero-label::before {
+      content: '';
+      width: 32px;
+      height: 2px;
+      background: var(--red);
+    }
+
+    h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(56px, 8vw, 110px);
+      line-height: 0.92;
+      letter-spacing: -2px;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+
+    h1 em {
+      font-style: normal;
+      color: var(--red);
+      display: block;
+    }
+
+    .hero-desc {
+      font-size: 17px;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.6);
+      max-width: 520px;
+      margin-bottom: 48px;
+    }
+
+    /* EMAIL SIGNUP */
+    .signup-form {
+      display: flex;
+      gap: 0;
+      max-width: 480px;
+      border: 1px solid rgba(224,32,32,0.4);
+      border-radius: 4px;
+      overflow: hidden;
+      background: var(--dark2);
+    }
+
+    .signup-form input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      padding: 14px 18px;
+      font-family: 'Barlow', sans-serif;
+      font-size: 14px;
+      color: var(--white);
+    }
+
+    .signup-form input::placeholder { color: var(--gray); }
+
+    .signup-form button {
+      background: var(--red);
+      border: none;
+      padding: 14px 24px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--white);
+      cursor: pointer;
+      transition: background .2s;
+      white-space: nowrap;
+    }
+
+    .signup-form button:hover { background: var(--red-dark); }
+
+    .signup-note {
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--gray);
+    }
+
+    /* STATS BAR */
+    .stats {
+      margin-top: 80px;
+      padding: 32px 40px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      gap: 60px;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {}
+
+    .stat-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 40px;
+      line-height: 1;
+      color: var(--white);
+      letter-spacing: -1px;
+    }
+
+    .stat-num span { color: var(--red); }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--gray);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* CATEGORIES STRIP */
+    .categories {
+      padding: 60px 40px;
+      background: var(--dark);
+    }
+
+    .section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+    }
+
+    .cat-card {
+      background: var(--dark2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 4px;
+      padding: 24px 20px;
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+      text-decoration: none;
+    }
+
+    .cat-card:hover {
+      border-color: rgba(224,32,32,0.4);
+      background: rgba(224,32,32,0.05);
+    }
+
+    .cat-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .cat-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .cat-count {
+      font-size: 12px;
+      color: var(--gray);
+      margin-top: 4px;
+    }
+
+    /* COMING SOON BANNER */
+    .coming-soon {
+      margin: 0 40px 60px;
+      background: rgba(224,32,32,0.08);
+      border: 1px solid rgba(224,32,32,0.25);
+      border-left: 4px solid var(--red);
+      border-radius: 4px;
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .cs-pulse {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--red);
+      flex-shrink: 0;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .cs-text {
+      flex: 1;
+    }
+
+    .cs-text strong {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .cs-text p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 32px 40px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 20px;
+      color: var(--white);
+    }
+
+    .footer-logo span { color: var(--red); }
+
+    footer p {
+      font-size: 12px;
+      color: var(--gray);
+    }
+
+    /* SCROLLING TICKER */
+    .ticker-wrap {
+      background: var(--red);
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 10px 0;
+    }
+
+    .ticker {
+      display: inline-block;
+      animation: ticker 25s linear infinite;
+    }
+
+    .ticker span {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: white;
+      margin: 0 40px;
+    }
+
+    .ticker span::before {
+      content: '//';
+      margin-right: 12px;
+      opacity: 0.6;
+    }
+
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      header { padding: 0 20px; }
+      .hero { padding: 80px 20px 0; }
+      .stats { padding: 32px 20px; gap: 32px; }
+      .categories { padding: 40px 20px; }
+      .coming-soon { margin: 0 20px 40px; }
+      footer { padding: 24px 20px; }
+      h1 { font-size: 56px; }
+      .signup-form { flex-direction: column; }
+      .signup-form button { padding: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <a href="/" class="logo">MOTO<span>BREAKING</span></a>
+    <span class="header-tag">Launching Soon</span>
+  </header>
+
+  <!-- TICKER -->
+  <div style="margin-top: 64px;">
+    <div class="ticker-wrap">
+      <div class="ticker">
+        <span>Breaking Moto News</span>
+        <span>MotoGP Updates</span>
+        <span>Latest Bike Reviews</span>
+        <span>Racing Results</span>
+        <span>New Model Launches</span>
+        <span>Industry News</span>
+        <span>Rider Interviews</span>
+        <span>Breaking Moto News</span>
+        <span>MotoGP Updates</span>
+        <span>Latest Bike Reviews</span>
+        <span>Racing Results</span>
+        <span>New Model Launches</span>
+        <span>Industry News</span>
+        <span>Rider Interviews</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-text">MB</div>
+    <div class="hero-inner">
+      <div class="hero-label">Breaking Motorcycle News</div>
+      <h1>
+        The Fastest
+        <em>Moto News</em>
+        On The Web
+      </h1>
+      <p class="hero-desc">
+        MotoBreaking delivers real-time motorcycle news, MotoGP race updates, new model launches, and in-depth reviews — before anyone else.
+      </p>
+
+      <form class="signup-form" onsubmit="handleSignup(event)">
+        <input type="email" placeholder="Enter your email for early access" id="email-input">
+        <button type="submit">Notify Me</button>
+      </form>
+      <p class="signup-note">No spam. Unsubscribe anytime.</p>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats">
+      <div class="stat-item">
+        <div class="stat-num">24<span>/7</span></div>
+        <div class="stat-label">Live Coverage</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">10<span>+</span></div>
+        <div class="stat-label">News Sources</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">5<span>x</span></div>
+        <div class="stat-label">Daily Updates</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">UK<span>/</span>EU<span>/</span>US</div>
+        <div class="stat-label">Global Coverage</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="categories">
+    <div class="section-label">What We Cover</div>
+    <div class="cat-grid">
+      <a class="cat-card" href="#">
+        <span class="cat-icon">🏁</span>
+        <div class="cat-name">Racing</div>
+        <div class="cat-count">MotoGP · WSBK · BSB</div>
+      </a>
+      <a class="cat-card" href="#">
+        <span class="cat-icon">🏍️</span>
+        <div class="cat-name">New Models</div>
+        <div class="cat-count">Launches & Reveals</div>
+      </a>
+      <a class="cat-card" href="#">
+        <span class="cat-icon">🔧</span>
+        <div class="cat-name">Reviews</div>
+        <div class="cat-count">Bikes & Gear</div>
+      </a>
+      <a class="cat-card" href="#">
+        <span class="cat-icon">⚡</span>
+        <div class="cat-name">Electric</div>
+        <div class="cat-count">EV Motos & Tech</div>
+      </a>
+      <a class="cat-card" href="#">
+        <span class="cat-icon">📰</span>
+        <div class="cat-name">Industry</div>
+        <div class="cat-count">Business & Market</div>
+      </a>
+      <a class="cat-card" href="#">
+        <span class="cat-icon">🌍</span>
+        <div class="cat-name">World News</div>
+        <div class="cat-count">Global Moto Scene</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- COMING SOON BANNER -->
+  <div class="coming-soon">
+    <div class="cs-pulse"></div>
+    <div class="cs-text">
+      <strong>Full Site Launching Very Soon</strong>
+      <p>We're building the fastest motorcycle news platform on the web. Sign up above to get notified first.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">MOTO<span>BREAKING</span></div>
+    <p>© 2025 MotoBreaking.com · All rights reserved</p>
+    <p>Breaking motorcycle news, 24/7</p>
+  </footer>
+
+  <script>
+    function handleSignup(e) {
+      e.preventDefault();
+      const input = document.getElementById('email-input');
+      if (!input.value) return;
+      input.value = '';
+      input.placeholder = '✓ You\'re on the list!';
+      input.style.color = '#4CAF50';
+    }
+  </script>
+
+</body>
+</html>

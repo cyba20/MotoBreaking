@@ -78,6 +78,42 @@
     100% { transform: translateX(-50%); }
   }
 
+  .logo-banner {
+    background: var(--bg-primary);
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo-banner-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo-banner-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    letter-spacing: 4px;
+    color: var(--text-primary);
+    line-height: 1;
+  }
+  .logo-banner-text span { color: var(--accent); }
+  .logo-banner-img {
+    height: 100px;
+    width: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    opacity: 0.85;
+    filter: grayscale(60%) contrast(1.1);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 35%, transparent 70%);
+    mask-image: radial-gradient(ellipse at center, black 35%, transparent 70%);
+  }
+
   /* ─── HEADER ─── */
   header {
     border-bottom: 1px solid var(--border);
@@ -105,12 +141,13 @@
     gap: 8px;
   }
   .logo span { color: var(--accent); }
-  .logo-dot {
-    width: 8px;
-    height: 8px;
-    background: var(--accent);
-    border-radius: 50%;
-    animation: pulse-dot 2s ease-in-out infinite;
+  .logo-img {
+    height: 36px;
+    width: auto;
+    border-radius: 4px;
+    object-fit: cover;
+    -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 72%);
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 72%);
   }
   @keyframes pulse-dot {
     0%, 100% { opacity: 1; }
@@ -666,38 +703,15 @@
 </head>
 <body>
 
-<!-- TICKER -->
-<div class="ticker-wrap">
-  <div class="ticker">
-    <div class="ticker-item">Marquez takes pole at Jerez</div>
-    <div class="ticker-item">Ducati Panigale V4 R revealed</div>
-    <div class="ticker-item">KTM restructuring approved</div>
-    <div class="ticker-item">Yamaha confirms new R1 for 2026</div>
-    <div class="ticker-item">MotoGP Round 3 race preview</div>
-    <div class="ticker-item">Honda CBR1000RR-R updated</div>
-    <div class="ticker-item">Triumph Street Triple RS wins best naked</div>
-    <div class="ticker-item">Marquez takes pole at Jerez</div>
-    <div class="ticker-item">Ducati Panigale V4 R revealed</div>
-    <div class="ticker-item">KTM restructuring approved</div>
-    <div class="ticker-item">Yamaha confirms new R1 for 2026</div>
-    <div class="ticker-item">MotoGP Round 3 race preview</div>
-    <div class="ticker-item">Honda CBR1000RR-R updated</div>
-    <div class="ticker-item">Triumph Street Triple RS wins best naked</div>
+
+<!-- LOGO BANNER -->
+<div class="logo-banner">
+  <div class="logo-banner-inner">
+    <div class="logo-banner-text">MOTO <span>BREAKING</span></div>
+    <img class="logo-banner-img" src="logo-moto.jpg" alt="">
+    <span class="header-date">Saturday, 22 March 2026</span>
   </div>
 </div>
-
-<!-- HEADER -->
-<header>
-  <div class="header-inner">
-    <a href="#" class="logo">
-      MOTO<span>BREAKING</span>
-      <div class="logo-dot"></div>
-    </a>
-    <div class="header-actions">
-      <span class="header-date">Saturday, 22 March 2026</span>
-    </div>
-  </div>
-</header>
 
 <!-- HERO -->
 <div class="container">

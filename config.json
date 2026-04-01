@@ -1,0 +1,37 @@
+{
+  "rss_feeds": [
+    {
+      "url": "https://www.motorcyclenews.com/rss/news/",
+      "name": "MCN",
+      "category": "industry"
+    },
+    {
+      "url": "https://www.visordown.com/rss",
+      "name": "Visordown",
+      "category": "newmodel"
+    },
+    {
+      "url": "https://www.cycleworld.com/rss",
+      "name": "Cycle World",
+      "category": "review"
+    },
+    {
+      "url": "https://www.asphaltandrubber.com/feed/",
+      "name": "Asphalt & Rubber",
+      "category": "motogp"
+    },
+    {
+      "url": "https://www.motor1.com/rss/news/motorcycles/feed.xml",
+      "name": "Motor1",
+      "category": "industry"
+    },
+    {
+      "url": "https://www.rideapart.com/rss/",
+      "name": "RideApart",
+      "category": "electric"
+    }
+  ],
+  "max_articles_per_run": 10,
+  "output_dir": "news",
+  "site_url": "https://motobreaking.com"
+}

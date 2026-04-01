@@ -1,25 +1,19 @@
 #!/usr/bin/env python3
 """
-rewrite_news.py — Rewrites news articles via AI (Groq API)
+rewrite_news.py - Rewrites news articles via AI (Groq API using requests)
 """
 
 import json
 import os
 import sys
 import time
-from groq import Groq
+import requests
 
 
-def get_groq_client():
-    api_key = os.environ.get("GROQ_API_KEY")
-    if not api_key:
-        print("ERROR: GROQ_API_KEY not set!")
-        print("Get a free key at https://console.groq.com")
-        sys.exit(1)
-    return Groq(api_key=api_key)
+API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 
-def rewrite_article(client, title, summary, source):
+def rewrite_article(api_key, title, summary, source):
     prompt = f"""You are a professional motorcycle news journalist. Rewrite the following news article in English. Make it completely unique and original - do NOT copy the original text. Write in your own words.
 
 Requirements:
@@ -42,97 +36,120 @@ Return ONLY valid JSON in this exact format:
   "content": "full rewritten article text with paragraphs"
 }}"""
 
-    try:
-        response = client.chat.completions.create(
-            messages=[{"role": "user", "content": prompt}],
-            model="llama-3.1-8b-instant",
-            temperature=0.8,
-            max_tokens=1500
-        )
-        
-        result = response.choices[0].message.content
-        print(f"  AI response length: {len(result)}")
-        
-        # Remove markdown code blocks if present
-        result = result.strip()
-        if result.startswith("```"):
-            lines = result.split("\n")
-            lines = lines[1:-1]  # Remove first and last line
-            result = "\n".join(lines)
-            if result.startswith("json"):
-                result = result[4:]
-        
-        parsed = json.loads(result.strip())
-        
-        # Validate required fields
-        if not all(k in parsed for k in ["headline", "summary", "content"]):
-            print(f"  Missing fields in AI response")
-            return None
-        
-        return parsed
-        
-    except json.JSONDecodeError as e:
-        print(f"  JSON parse error: {e}")
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
+    }
+    
+    payload = {
+        "model": "llama-3.1-8b-instant",
+        "messages": [{"role": "user", "content": prompt}],
+        "temperature": 0.8,
+        "max_tokens": 1500
+    }
+    
+    resp = requests.post(API_URL, headers=headers, json=payload, timeout=60)
+    
+    if resp.status_code != 200:
+        print(f"  HTTP {resp.status_code}: {resp.text[:200]}")
         return None
-    except Exception as e:
-        print(f"  AI error: {type(e).__name__}: {e}")
+    
+    data = resp.json()
+    result = data["choices"][0]["message"]["content"]
+    print(f"  AI response: {len(result)} chars")
+    
+    # Remove markdown code blocks
+    result = result.strip()
+    if result.startswith("```"):
+        lines = result.split("\n")
+        lines = lines[1:-1]
+        result = "\n".join(lines)
+        if result.startswith("json"):
+            result = result[4:]
+    
+    parsed = json.loads(result.strip())
+    
+    if not all(k in parsed for k in ["headline", "summary", "content"]):
+        print(f"  Missing fields: {list(parsed.keys())}")
         return None
+    
+    return parsed
 
 
 def main():
-    print("=" * 50)
+    print("=" * 60)
     print("MotoBreaking - AI Article Rewriting")
-    print("=" * 50)
+    print("=" * 60)
     
-    # Load collected articles
-    with open("raw_articles.json", "r", encoding="utf-8") as f:
-        articles = json.load(f)
+    api_key = os.environ.get("GROQ_API_KEY", "")
+    print(f"API key: {'SET' if api_key else 'NOT SET'} (length: {len(api_key)})")
     
-    print(f"Articles to rewrite: {len(articles)}")
-    
-    if not articles:
-        print("No articles found. Check fetch_news.py output.")
-        # Save empty array so pipeline continues
-        with open("rewritten_articles.json", "w", encoding="utf-8") as f:
+    if not api_key:
+        print("ERROR: GROQ_API_KEY not set!")
+        with open("rewritten_articles.json", "w") as f:
             json.dump([], f)
         return
     
-    client = get_groq_client()
+    # Test API first
+    print("\nTesting Groq API...")
+    test_resp = requests.post(
+        API_URL,
+        headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
+        json={"model": "llama-3.1-8b-instant", "messages": [{"role": "user", "content": "Say hi"}], "max_tokens": 5},
+        timeout=10
+    )
+    print(f"Test: HTTP {test_resp.status_code}")
+    if test_resp.status_code == 200:
+        print(f"Response: {test_resp.json()['choices'][0]['message']['content']}")
+    else:
+        print(f"Error: {test_resp.text[:200]}")
+    
+    # Load articles
+    with open("raw_articles.json", "r", encoding="utf-8") as f:
+        articles = json.load(f)
+    
+    print(f"\nArticles to rewrite: {len(articles)}")
+    
+    if not articles:
+        print("No articles found.")
+        with open("rewritten_articles.json", "w") as f:
+            json.dump([], f)
+        return
+    
     rewritten = []
     
     for i, article in enumerate(articles):
         print(f"\n[{i+1}/{len(articles)}] {article['title'][:60]}...")
         
-        result = rewrite_article(
-            client,
-            article["title"],
-            article["summary"],
-            article["source"]
-        )
+        try:
+            result = rewrite_article(
+                api_key,
+                article["title"],
+                article["summary"],
+                article["source"]
+            )
+            
+            if result:
+                article["rewritten_title"] = result["headline"]
+                article["rewritten_summary"] = result["summary"]
+                article["rewritten_content"] = result["content"]
+                article["status"] = "rewritten"
+                rewritten.append(article)
+                print(f"  OK: {result['headline'][:60]}")
+            else:
+                article["status"] = "failed"
+                print(f"  FAILED")
+                
+        except Exception as e:
+            print(f"  ERROR: {type(e).__name__}: {e}")
         
-        if result:
-            article["rewritten_title"] = result["headline"]
-            article["rewritten_summary"] = result["summary"]
-            article["rewritten_content"] = result["content"]
-            article["status"] = "rewritten"
-            rewritten.append(article)
-            print(f"  OK: {result['headline'][:60]}...")
-        else:
-            article["status"] = "failed"
-            print(f"  FAILED, skipping")
-        
-        # Small delay to avoid rate limiting
         if i < len(articles) - 1:
             time.sleep(2)
     
-    # Save rewritten articles
     with open("rewritten_articles.json", "w", encoding="utf-8") as f:
         json.dump(rewritten, f, indent=2, ensure_ascii=False)
     
     print(f"\nDone! Rewritten: {len(rewritten)} of {len(articles)}")
-    
-    if len(rewritten) == 0:
-        print("WARNING: No articles were rewritten. Check Groq API key and model availability.")
 
 
 if __name__ == "__main__":

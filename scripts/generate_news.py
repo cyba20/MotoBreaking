@@ -225,10 +225,6 @@ footer{{border-top:1px solid var(--border);padding:32px 0;margin-top:64px;text-a
 *{{margin:0;padding:0;box-sizing:border-box}}
 body{{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;line-height:1.5}}
 a{{color:inherit;text-decoration:none}}
-.ticker-wrap{{background:var(--accent);overflow:hidden;height:36px}}
-.ticker{{display:flex;align-items:center;height:100%;animation:tk 40s linear infinite;white-space:nowrap}}
-.ticker-item{{font-family:'JetBrains Mono',monospace;font-size:12px;padding:0 32px;color:#fff}}
-@keyframes tk{{0%{{transform:translateX(0)}}100%{{transform:translateX(-50%)}}}}
 .logo-banner{{background:var(--bg);padding:12px 0;border-bottom:1px solid var(--border)}}
 .logo-banner-inner{{max-width:1400px;margin:0 auto;padding:0 24px}}
 .logo-banner-text{{font-family:'Bebas Neue',sans-serif;font-size:48px;letter-spacing:4px}}
@@ -282,10 +278,6 @@ footer{{padding:48px 0 32px;border-top:1px solid var(--border)}}
 </style>
 </head>
 <body>
-<div class="ticker-wrap"><div class="ticker">
-{''.join(f'<div class="ticker-item">{a["rewritten_title"]}</div>' for a in articles[:6])}
-{''.join(f'<div class="ticker-item">{a["rewritten_title"]}</div>' for a in articles[:6])}
-</div></div>
 <div class="logo-banner"><div class="logo-banner-inner"><div class="logo-banner-text">MOTO <span>BREAKING</span></div></div></div>
 <div class="updated-info">Last updated: <span>{now}</span> - Auto-refreshed every 4 hours</div>
 <header><div class="header-inner"><div class="logo">MOTO<span>BREAKING</span></div><div class="header-date">{now}</div></div></header>

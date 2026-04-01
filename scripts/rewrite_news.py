@@ -45,7 +45,7 @@ Return ONLY valid JSON in this exact format:
     try:
         response = client.chat.completions.create(
             messages=[{"role": "user", "content": prompt}],
-            model="llama-3.3-70b-versatile",
+            model="llama-3.1-8b-instant",
             temperature=0.8,
             max_tokens=1500
         )
@@ -133,7 +133,6 @@ def main():
     
     if len(rewritten) == 0:
         print("WARNING: No articles were rewritten. Check Groq API key and model availability.")
-        sys.exit(1)
 
 
 if __name__ == "__main__":

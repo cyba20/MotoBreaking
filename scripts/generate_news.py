@@ -23,6 +23,13 @@ RSS_FEEDS = [
     {"url": "https://www.asphaltandrubber.com/feed/", "name": "Asphalt & Rubber", "category": "motogp"},
     {"url": "https://www.motor1.com/rss/news/motorcycles/feed.xml", "name": "Motor1", "category": "industry"},
     {"url": "https://www.rideapart.com/rss/", "name": "RideApart", "category": "electric"},
+    {"url": "https://www.cycleworld.com/rss", "name": "Cycle World", "category": "review"},
+    {"url": "https://www.bennetts.co.uk/bikesocial/news/rss", "name": "BikeSocial", "category": "industry"},
+    {"url": "https://www.motorcycle.com/feed/", "name": "Motorcycle.com", "category": "review"},
+    {"url": "https://www.bikeexif.com/feed", "name": "Bike EXIF", "category": "culture"},
+    {"url": "https://www.pistonheads.com/rss/news/motorcycles/", "name": "PistonHeads", "category": "industry"},
+    {"url": "https://www.dirtbikemagazine.com/feed/", "name": "Dirt Bike Magazine", "category": "culture"},
+    {"url": "https://www.superbikeplanet.com/feed/", "name": "Superbike Planet", "category": "wsbk"},
 ]
 
 
@@ -33,7 +40,7 @@ def fetch_articles():
         print(f"  Fetching: {feed_info['name']}...")
         try:
             feed = feedparser.parse(feed_info["url"])
-            for entry in feed.entries[:3]:
+            for entry in feed.entries[:5]:
                 image = ""
                 if hasattr(entry, 'media_content') and entry.media_content:
                     for m in entry.media_content:

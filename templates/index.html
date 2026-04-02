@@ -580,9 +580,7 @@
           <span class="tag tag-{{ first.category }}">{{ first.category }}</span>
           <h1 class="hero-title">{{ first.rewritten_title }}</h1>
           <p class="hero-excerpt">{{ first.rewritten_summary }}</p>
-          <div class="hero-meta">
-            <span class="time">{{ first.published }}</span>
-          </div>
+          <div class="hero-meta"></div>
         </div>
       </a>
       <div class="hero-sidebar">
@@ -591,7 +589,6 @@
           <div>
             <div class="hero-side-tag"><span class="tag tag-{{ article.category }}">{{ article.category }}</span></div>
             <div class="hero-side-title">{{ article.rewritten_title }}</div>
-            <div class="hero-side-meta">{{ article.published }}</div>
           </div>
           {% if article.image %}
           <img class="hero-side-img" src="{{ article.image }}" alt="">
@@ -619,9 +616,7 @@
           <div class="news-card-tag"><span class="tag tag-{{ article.category }}">{{ article.category }}</span></div>
           <div class="news-card-title">{{ article.rewritten_title }}</div>
           <div class="news-card-excerpt">{{ article.rewritten_summary }}</div>
-          <div class="news-card-meta">
-            <span>{{ article.published }}</span>
-          </div>
+          <div class="news-card-meta"></div>
         </div>
       </a>
       {% endfor %}
@@ -643,7 +638,7 @@
             <div class="numbered-item-content">
               <div class="numbered-item-tag"><span class="tag tag-{{ article.category }}">{{ article.category }}</span></div>
               <div class="numbered-item-title">{{ article.rewritten_title }}</div>
-              <div class="numbered-item-meta">{{ article.published }}</div>
+              <div class="numbered-item-meta"></div>
             </div>
             {% if article.image %}
             <img class="numbered-item-img" src="{{ article.image }}" alt="">

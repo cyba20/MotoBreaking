@@ -54,7 +54,6 @@ def fetch_articles():
                     "title": entry.get("title", "No title"),
                     "link": entry.get("link", ""),
                     "summary": summary,
-                    "published": entry.get("published", ""),
                     "source": feed_info["name"],
                     "category": feed_info["category"],
                     "image": image,

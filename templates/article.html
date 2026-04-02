@@ -75,11 +75,6 @@
         
         <h1 class="article-title">{{ article.rewritten_title }}</h1>
         
-        <div class="article-meta">
-            <span>{{ article.published }}</span>
-            <span>Source: {{ article.source }}</span>
-        </div>
-        
         {% if article.image %}
         <img src="{{ article.image }}" alt="{{ article.rewritten_title }}" class="article-image">
         {% endif %}

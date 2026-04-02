@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ORCO: A Sculptor’s Take on Yamaha’s Misunderstood MT-01 - MotoBreaking</title>
+    <title>ORCO: A Sculptor’s Take on Yamaha’s Misunderstood MT-01 – MotoBreaking</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-primary: #0a0a0a;
             --bg-secondary: #111111;
             --bg-card: #161616;
+            --bg-card-hover: #1c1c1c;
             --text-primary: #f0f0f0;
             --text-secondary: #a0a0a0;
             --text-muted: #666;
             --accent: #e31937;
             --accent-hover: #ff2244;
             --border: #222;
+            --border-light: #2a2a2a;
             --tag-motogp: #e31937;
             --tag-newmodel: #2d8cf0;
             --tag-industry: #f5a623;
@@ -26,15 +28,26 @@
             --tag-bsb: #06b6d4;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--bg-primary); color: var(--text-primary); font-family: 'Source Sans 3', sans-serif; line-height: 1.6; }
+        body { background: var(--bg-primary); color: var(--text-primary); font-family: 'Source Sans 3', sans-serif; line-height: 1.5; -webkit-font-smoothing: antialiased; }
         a { color: inherit; text-decoration: none; }
-        
-        .header { background: var(--bg-primary); border-bottom: 1px solid var(--border); padding: 16px 0; position: sticky; top: 0; z-index: 100; }
-        .header-inner { max-width: 900px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
+
+        .logo-banner { background: var(--bg-primary); padding: 12px 0; border-bottom: 1px solid var(--border); }
+        .logo-banner-inner { max-width: 1400px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: center; }
+        .logo-banner-text { font-family: 'Bebas Neue', sans-serif; font-size: 48px; letter-spacing: 4px; color: var(--text-primary); line-height: 1; }
+        .logo-banner-text span { color: var(--accent); }
+
+        header { border-bottom: 1px solid var(--border); background: var(--bg-primary); position: sticky; top: 0; z-index: 100; }
+        .header-inner { max-width: 1400px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
         .logo { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; }
         .logo span { color: var(--accent); }
-        
-        .article-container { max-width: 720px; margin: 0 auto; padding: 40px 24px; }
+        .back-link { color: var(--accent); font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 6px; transition: gap 0.2s; }
+        .back-link:hover { gap: 10px; }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+
+        .article-layout { display: grid; grid-template-columns: 1fr 340px; gap: 48px; padding: 40px 0; }
+
+        .article-main {}
         .article-tag { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; padding: 4px 10px; border-radius: 3px; color: #fff; margin-bottom: 16px; }
         .tag-motogp { background: var(--tag-motogp); }
         .tag-newmodel { background: var(--tag-newmodel); }
@@ -44,46 +57,132 @@
         .tag-culture { background: var(--tag-culture); }
         .tag-wsbk { background: var(--tag-wsbk); }
         .tag-bsb { background: var(--tag-bsb); }
-        
-        .article-title { font-family: 'Bebas Neue', sans-serif; font-size: 42px; line-height: 1.1; letter-spacing: 1px; margin-bottom: 16px; }
-        .article-meta { font-size: 14px; color: var(--text-muted); margin-bottom: 32px; font-family: 'JetBrains Mono', monospace; }
-        .article-meta span { margin-right: 16px; }
-        
+
+        .article-title { font-family: 'Bebas Neue', sans-serif; font-size: 48px; line-height: 1.05; letter-spacing: 1px; margin-bottom: 20px; }
+        .article-excerpt { font-size: 18px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 28px; font-style: italic; border-left: 3px solid var(--accent); padding-left: 16px; }
+
         .article-image { width: 100%; border-radius: 8px; margin-bottom: 32px; }
-        
-        .article-content { font-size: 18px; line-height: 1.8; color: var(--text-secondary); }
+
+        .article-content { font-size: 18px; line-height: 1.85; color: var(--text-secondary); }
         .article-content p { margin-bottom: 24px; }
-        
-        .back-link { display: inline-flex; align-items: center; gap: 8px; color: var(--accent); font-weight: 600; font-size: 14px; margin-bottom: 32px; transition: gap 0.2s; }
-        .back-link:hover { gap: 12px; }
-        
-        .footer { border-top: 1px solid var(--border); padding: 32px 0; margin-top: 64px; text-align: center; color: var(--text-muted); font-size: 13px; font-family: 'JetBrains Mono', monospace; }
+
+        .article-divider { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+        .article-source { font-size: 13px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+        .article-source a { color: var(--accent); text-decoration: underline; }
+
+        .sidebar-block { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 24px; margin-bottom: 20px; position: sticky; top: 104px; }
+        .sidebar-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 1.5px; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+        .sidebar-title::before { content: ''; width: 3px; height: 18px; background: var(--accent); border-radius: 2px; }
+
+        .sidebar-item { display: block; padding: 14px 0; border-bottom: 1px solid var(--border); transition: padding-left 0.2s; }
+        .sidebar-item:last-child { border-bottom: none; }
+        .sidebar-item:hover { padding-left: 6px; }
+        .sidebar-item:hover .sidebar-item-title { color: var(--accent); }
+        .sidebar-item-tag { margin-bottom: 4px; }
+        .sidebar-item-title { font-size: 15px; font-weight: 700; line-height: 1.3; transition: color 0.2s; }
+
+        .related-card { display: block; padding: 16px 0; border-bottom: 1px solid var(--border); }
+        .related-card:last-child { border-bottom: none; }
+        .related-card:hover .related-title { color: var(--accent); }
+        .related-title { font-size: 15px; font-weight: 700; line-height: 1.3; transition: color 0.2s; }
+
+        footer { padding: 48px 0 32px; border-top: 1px solid var(--border); }
+        .footer-bottom { text-align: center; font-size: 12px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+
+        @media (max-width: 1024px) {
+            .article-layout { grid-template-columns: 1fr; }
+            .sidebar-block { position: static; }
+        }
+        @media (max-width: 640px) {
+            .article-title { font-size: 36px; }
+        }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="header-inner">
-            <a href="index.html" class="logo">MOTO<span>BREAKING</span></a>
-            <a href="index.html" class="back-link">← Back to news</a>
-        </div>
-    </header>
-    
-    <main class="article-container">
-        <a href="index.html" class="back-link">← All News</a>
+
+<div class="logo-banner">
+  <div class="logo-banner-inner">
+    <div class="logo-banner-text">MOTO <span>BREAKING</span></div>
+  </div>
+</div>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">MOTO<span>BREAKING</span></div>
+    <a href="index.html" class="back-link">← Back to Home</a>
+  </div>
+</header>
+
+<div class="container">
+  <div class="article-layout">
+    <div class="article-main">
+      <a href="index.html" class="back-link">← All News</a>
+
+      <span class="article-tag tag-culture">culture</span>
+
+      <h1 class="article-title">ORCO: A Sculptor’s Take on Yamaha’s Misunderstood MT-01</h1>
+
+      <p class="article-excerpt">Italian sculptor Giordano Loi transforms a 2008 Yamaha MT-01 into a radical street fighter with carbon fiber bodywork and far more aggressive intentions.When the Yamaha MT-01 arrived in 2005, it felt </p>
+
+      
+
+      <div class="article-content">
+        Italian sculptor Giordano Loi transforms a 2008 Yamaha MT-01 into a radical street fighter with carbon fiber bodywork and far more aggressive intentions.When the Yamaha MT-01 arrived in 2005, it felt like Yamaha had built a motorcycle from two completely different design briefs. At its heart sat a m...
+      </div>
+
+      <hr class="article-divider">
+
+      <div class="article-source">
+        Original story from <a href="https://www.bikeexif.com/custom-yamaha-mt-01-street-fighter" target="_blank" rel="noopener">Bike EXIF</a>
+      </div>
+    </div>
+
+    <aside>
+      <div class="sidebar-block">
+        <div class="sidebar-title">MORE STORIES</div>
         
-        <span class="article-tag tag-culture">culture</span>
+        <a href="news/0246dbae.html" class="sidebar-item">
+          <div class="sidebar-item-tag"><span class="tag tag-newmodel">newmodel</span></div>
+          <div class="sidebar-item-title">2027 KTM Freeride E to arrive in dealerships this April</div>
+        </a>
         
-        <h1 class="article-title">ORCO: A Sculptor’s Take on Yamaha’s Misunderstood MT-01</h1>
+        <a href="news/bcfc11b4.html" class="sidebar-item">
+          <div class="sidebar-item-tag"><span class="tag tag-newmodel">newmodel</span></div>
+          <div class="sidebar-item-title">Cardo Systems reveals new Packtalk-S and 4X-S for Shoei Gen 3 helmets</div>
+        </a>
         
+        <a href="news/3663eb29.html" class="sidebar-item">
+          <div class="sidebar-item-tag"><span class="tag tag-newmodel">newmodel</span></div>
+          <div class="sidebar-item-title">Watsonian Squire SB1 sidecar developed for the popular BSA Bantam 350</div>
+        </a>
         
+        <a href="news/9b3aa814.html" class="sidebar-item">
+          <div class="sidebar-item-tag"><span class="tag tag-newmodel">newmodel</span></div>
+          <div class="sidebar-item-title">Deus Ex Machina and Yamaha turn XSR900 into a race bike with a twist</div>
+        </a>
         
-        <div class="article-content">
-            Italian sculptor Giordano Loi transforms a 2008 Yamaha MT-01 into a radical street fighter with carbon fiber bodywork and far more aggressive intentions.When the Yamaha MT-01 arrived in 2005, it felt like Yamaha had built a motorcycle from two completely different design briefs. At its heart sat a m...
-        </div>
-    </main>
-    
-    <footer class="footer">
-        © 2026 MotoBreaking — Breaking Motorcycle News
-    </footer>
+        <a href="news/c78f4769.html" class="sidebar-item">
+          <div class="sidebar-item-tag"><span class="tag tag-newmodel">newmodel</span></div>
+          <div class="sidebar-item-title">DAO Racing announces Isle of Man TT return with BSB star Josh Brookes</div>
+        </a>
+        
+        <a href="news/cacae010.html" class="sidebar-item">
+          <div class="sidebar-item-tag"><span class="tag tag-culture">culture</span></div>
+          <div class="sidebar-item-title">Throwback Thursday—Last of Kings: In the Saddle of Norton’s Big 850 Commando</div>
+        </a>
+        
+        <a href="all.html" style="display:block; margin-top:16px; color:var(--accent); font-weight:600; font-size:14px;">View all news →</a>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-bottom">© 2026 MotoBreaking.com · All rights reserved</div>
+  </div>
+</footer>
+
 </body>
 </html>

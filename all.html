@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All News – MotoBreaking</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #111111;
+    --bg-card: #161616;
+    --bg-card-hover: #1c1c1c;
+    --text-primary: #f0f0f0;
+    --text-secondary: #a0a0a0;
+    --text-muted: #666;
+    --accent: #e31937;
+    --accent-hover: #ff2244;
+    --border: #222;
+    --border-light: #2a2a2a;
+    --tag-motogp: #e31937;
+    --tag-newmodel: #2d8cf0;
+    --tag-industry: #f5a623;
+    --tag-electric: #22c55e;
+    --tag-review: #a855f7;
+    --tag-culture: #ec4899;
+    --tag-wsbk: #f97316;
+    --tag-bsb: #06b6d4;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg-primary); color: var(--text-primary); font-family: 'Source Sans 3', -apple-system, sans-serif; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  .logo-banner { background: var(--bg-primary); padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .logo-banner-inner { max-width: 1400px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: center; }
+  .logo-banner-text { font-family: 'Bebas Neue', sans-serif; font-size: 48px; letter-spacing: 4px; color: var(--text-primary); line-height: 1; }
+  .logo-banner-text span { color: var(--accent); }
+  header { border-bottom: 1px solid var(--border); background: var(--bg-primary); position: sticky; top: 0; z-index: 100; }
+  .header-inner { max-width: 1400px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; }
+  .logo span { color: var(--accent); }
+  .back-link { color: var(--accent); font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 6px; transition: gap 0.2s; }
+  .back-link:hover { gap: 10px; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+  .section { padding: 40px 0; border-bottom: 1px solid var(--border); }
+  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; display: flex; align-items: center; gap: 12px; }
+  .section-title::before { content: ''; width: 4px; height: 24px; background: var(--accent); border-radius: 2px; }
+  .tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; padding: 4px 10px; border-radius: 3px; display: inline-block; color: #fff; }
+  .tag-motogp { background: var(--tag-motogp); }
+  .tag-newmodel { background: var(--tag-newmodel); }
+  .tag-industry { background: var(--tag-industry); color: #111; }
+  .tag-electric { background: var(--tag-electric); color: #111; }
+  .tag-review { background: var(--tag-review); }
+  .tag-culture { background: var(--tag-culture); }
+  .tag-wsbk { background: var(--tag-wsbk); }
+  .tag-bsb { background: var(--tag-bsb); }
+  .numbered-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; }
+  .numbered-item { display: grid; grid-template-columns: 40px 1fr 100px; gap: 16px; align-items: start; padding: 18px 0; border-bottom: 1px solid var(--border); cursor: pointer; transition: all 0.2s; }
+  .numbered-item:hover { padding-left: 8px; }
+  .numbered-item:hover .numbered-item-title { color: var(--accent); }
+  .item-num { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--text-muted); line-height: 1; }
+  .numbered-item-tag { margin-bottom: 6px; }
+  .numbered-item-title { font-size: 16px; font-weight: 700; line-height: 1.35; transition: color 0.2s; }
+  .numbered-item-meta { margin-top: 6px; font-size: 11px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .numbered-item-img { width: 100px; height: 68px; object-fit: cover; border-radius: 6px; }
+  footer { padding: 48px 0 32px; border-top: 1px solid var(--border); }
+  .footer-bottom { text-align: center; font-size: 12px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  @media (max-width: 1024px) { .numbered-list { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { .numbered-item { grid-template-columns: 32px 1fr; } .numbered-item-img { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="logo-banner">
+  <div class="logo-banner-inner">
+    <div class="logo-banner-text">MOTO <span>BREAKING</span></div>
+  </div>
+</div>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">MOTO<span>BREAKING</span></div>
+    <a href="index.html" class="back-link">← Back to Home</a>
+  </div>
+</header>
+
+<div class="container">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">ALL NEWS</div>
+    </div>
+    <div class="numbered-list">
+      
+      <a href="news/0246dbae.html" class="numbered-item">
+        <div class="item-num">01</div>
+        <div class="numbered-item-content">
+          <div class="numbered-item-tag"><span class="tag tag-newmodel">newmodel</span></div>
+          <div class="numbered-item-title">2027 KTM Freeride E to arrive in dealerships this April</div>
+          <div class="numbered-item-meta">The new KTM Freeride E has arrived with more battery capacity, slightly more power, and weight savings....</div>
+        </div>
+        
+        <img class="numbered-item-img" src="https://cdn.visordown.com/2026-04/site-image-resize-2026-04-02t174339.986.png?width=1200" alt="">
+        
+      </a>
+      
+      <a href="news/bcfc11b4.html" class="numbered-item">
+        <div class="item-num">02</div>
+        <div class="numbered-item-content">
+          <div class="numbered-item-tag"><span class="tag tag-newmodel">newmodel</span></div>
+          <div class="numbered-item-title">Cardo Systems reveals new Packtalk-S and 4X-S for Shoei Gen 3 helmets</div>
+          <div class="numbered-item-meta">Cardo Systems has revealed the new Packtalk-S which is powered by the brand’s second-generation Dynamic Mesh intercom sy...</div>
+        </div>
+        
+        <img class="numbered-item-img" src="https://cdn.visordown.com/2026-04/site-image-resize-2026-04-02t121223.013.png?width=1200" alt="">
+        
+      </a>
+      
+      <a href="news/3663eb29.html" class="numbered-item">
+        <div class="item-num">03</div>
+        <div class="numbered-item-content">
+          <div class="numbered-item-tag"><span class="tag tag-newmodel">newmodel</span></div>
+          <div class="numbered-item-title">Watsonian Squire SB1 sidecar developed for the popular BSA Bantam 350</div>
+          <div class="numbered-item-meta">The popular BSA Bantam 350 is now available with a Squire SB1 sidecar from Watsonian....</div>
+        </div>
+        
+        <img class="numbered-item-img" src="https://cdn.visordown.com/2026-04/site-image-resize-2026-04-02t103148.569.png?width=1200" alt="">
+        
+      </a>
+      
+      <a href="news/9b3aa814.html" class="numbered-item">
+        <div class="item-num">04</div>
+        <div class="numbered-item-content">
+          <div class="numbered-item-tag"><span class="tag tag-newmodel">newmodel</span></div>
+          <div class="numbered-item-title">Deus Ex Machina and Yamaha turn XSR900 into a race bike with a twist</div>
+          <div class="numbered-item-meta">The XSR900 is one of those bikes that screams “custom build”, which Yamaha itself clearly agrees with....</div>
+        </div>
+        
+        <img class="numbered-item-img" src="https://cdn.visordown.com/2026-04/site-image-resize-2026-04-02t091837.938.png?width=1200" alt="">
+        
+      </a>
+      
+      <a href="news/c78f4769.html" class="numbered-item">
+        <div class="item-num">05</div>
+        <div class="numbered-item-content">
+          <div class="numbered-item-tag"><span class="tag tag-newmodel">newmodel</span></div>
+          <div class="numbered-item-title">DAO Racing announces Isle of Man TT return with BSB star Josh Brookes</div>
+          <div class="numbered-item-meta">DAO Racing has announced its road racing return for 2026, which includes competing at the Isle of Man TT....</div>
+        </div>
+        
+        <img class="numbered-item-img" src="https://cdn.visordown.com/2026-04/site-image-resize-2026-04-01t122258.848.png?width=1200" alt="">
+        
+      </a>
+      
+      <a href="news/cacae010.html" class="numbered-item">
+        <div class="item-num">06</div>
+        <div class="numbered-item-content">
+          <div class="numbered-item-tag"><span class="tag tag-culture">culture</span></div>
+          <div class="numbered-item-title">Throwback Thursday—Last of Kings: In the Saddle of Norton’s Big 850 Commando</div>
+          <div class="numbered-item-meta">The year was 1975, and the writing was on the wall for the Brits. Decades of industry dominance were coming to a close i...</div>
+        </div>
+        
+      </a>
+      
+      <a href="news/3f12ddbf.html" class="numbered-item">
+        <div class="item-num">07</div>
+        <div class="numbered-item-content">
+          <div class="numbered-item-tag"><span class="tag tag-culture">culture</span></div>
+          <div class="numbered-item-title">ORCO: A Sculptor’s Take on Yamaha’s Misunderstood MT-01</div>
+          <div class="numbered-item-meta">Italian sculptor Giordano Loi transforms a 2008 Yamaha MT-01 into a radical street fighter with carbon fiber bodywork an...</div>
+        </div>
+        
+      </a>
+      
+      <a href="news/3f8ed93b.html" class="numbered-item">
+        <div class="item-num">08</div>
+        <div class="numbered-item-content">
+          <div class="numbered-item-tag"><span class="tag tag-culture">culture</span></div>
+          <div class="numbered-item-title">Officine Rossopuro's Moto Guzzi V9 Bobber</div>
+          <div class="numbered-item-meta">In the seaside city of Pescara, nestled within Italy’s rugged Abruzzo region, Filippo Barbacane has been playing a long ...</div>
+        </div>
+        
+      </a>
+      
+      <a href="news/137d9e26.html" class="numbered-item">
+        <div class="item-num">09</div>
+        <div class="numbered-item-content">
+          <div class="numbered-item-tag"><span class="tag tag-culture">culture</span></div>
+          <div class="numbered-item-title">Back to Basics: HB-Custom's Honda NX650 Dominator</div>
+          <div class="numbered-item-meta">In the windswept coastal town of Husum, Germany, Holger Breuer of HB-Custom continues to cement his reputation as one of...</div>
+        </div>
+        
+      </a>
+      
+      <a href="news/b1c81a4a.html" class="numbered-item">
+        <div class="item-num">10</div>
+        <div class="numbered-item-content">
+          <div class="numbered-item-tag"><span class="tag tag-culture">culture</span></div>
+          <div class="numbered-item-title">Blue Monday: A Simson S50 Cafe Racer with a Soul</div>
+          <div class="numbered-item-meta">In the far east of Germany, Zwickau sits, a city where the air has smelled of two-stroke premix and industrial ambition ...</div>
+        </div>
+        
+      </a>
+      
+      <a href="news/7f68ee31.html" class="numbered-item">
+        <div class="item-num">11</div>
+        <div class="numbered-item-content">
+          <div class="numbered-item-tag"><span class="tag tag-culture">culture</span></div>
+          <div class="numbered-item-title">DUAL-SPORT-LEGAL KTM ELECTRIC FREERIDE E TO ARRIVE THIS SUMMER</div>
+          <div class="numbered-item-meta">The  KTM Freeride E is back! The second generation of KTM&#8217;s electric trail bike is back on the radar and it is to ...</div>
+        </div>
+        
+      </a>
+      
+      <a href="news/020a3f38.html" class="numbered-item">
+        <div class="item-num">12</div>
+        <div class="numbered-item-content">
+          <div class="numbered-item-tag"><span class="tag tag-culture">culture</span></div>
+          <div class="numbered-item-title">THE LIFE & TIMES OF 10 ICONIC DIRT BIKES: THE WRAP</div>
+          <div class="numbered-item-meta">We love motorcycles, and the extended staff at Dirt Bike has been lucky enough to spend the last 55 years riding and tes...</div>
+        </div>
+        
+      </a>
+      
+      <a href="news/a4fbd081.html" class="numbered-item">
+        <div class="item-num">13</div>
+        <div class="numbered-item-content">
+          <div class="numbered-item-tag"><span class="tag tag-culture">culture</span></div>
+          <div class="numbered-item-title">2026 DETROIT SUPERCROSS RESULTS</div>
+          <div class="numbered-item-meta">Ken Roczen took his second main event victory of the 2026 Monster Energy Supercross season and made it look easy. Other ...</div>
+        </div>
+        
+      </a>
+      
+      <a href="news/69c46c2b.html" class="numbered-item">
+        <div class="item-num">14</div>
+        <div class="numbered-item-content">
+          <div class="numbered-item-tag"><span class="tag tag-culture">culture</span></div>
+          <div class="numbered-item-title">2026 HONDA CRF450R: FULL TEST</div>
+          <div class="numbered-item-meta">You couldn’t ask for a better roll-out. Last year, the Honda CRF450R underwent a significant redesign. It got a new fram...</div>
+        </div>
+        
+      </a>
+      
+      <a href="news/4b7fc20a.html" class="numbered-item">
+        <div class="item-num">15</div>
+        <div class="numbered-item-content">
+          <div class="numbered-item-tag"><span class="tag tag-culture">culture</span></div>
+          <div class="numbered-item-title">2026 KOVE MX450 REVIEW</div>
+          <div class="numbered-item-meta">The world has changed. The windsock of technology has turned around and now shows a strong wind coming directly from Chi...</div>
+        </div>
+        
+      </a>
+      
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-bottom">© 2026 MotoBreaking.com · All rights reserved</div>
+  </div>
+</footer>
+
+</body>
+</html>

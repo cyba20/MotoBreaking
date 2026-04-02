@@ -656,44 +656,14 @@
   </div>
 </div>
 
-<div class="container">
-  <div class="section">
-    <div class="section-header">
-      <div class="section-title">RACING COVERAGE</div>
-      <a href="#" class="section-link">All Racing</a>
-    </div>
-    <div class="racing-scroll">
-      {% for article in articles[:3] %}
-      <a href="news/{{ article.unique_id }}.html" class="racing-card">
-        <div class="racing-card-series">{{ article.category }} · Latest</div>
-        <div class="racing-card-title">{{ article.rewritten_title }}</div>
-        <div class="racing-card-excerpt">{{ article.rewritten_summary[:150] }}...</div>
-        <div class="racing-card-meta">{{ article.published }} · {{ article.source }}</div>
-      </a>
-      {% endfor %}
-    </div>
-  </div>
-</div>
 {% endif %}
 
-<div class="container">
-  <footer>
-    <div style="text-align:center; margin-bottom: 24px;">
-      <div class="footer-heading" style="display:inline-block;">ABOUT</div>
-      <ul class="footer-links" style="display:inline-block; text-align:left;">
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Contact</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Advertise</a></li>
-        <li><a href="#">RSS Feed</a></li>
-      </ul>
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-value">24/7</div>
+      <div class="stat-label">Live Coverage</div>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 MotoBreaking.com · All rights reserved</span>
-      <span>Breaking motorcycle news, 24/7</span>
-    </div>
-  </footer>
-</div>
     <div class="stat-item">
       <div class="stat-value">10+</div>
       <div class="stat-label">News Sources</div>
@@ -711,41 +681,15 @@
 
 <div class="container">
   <footer>
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="logo">MOTO<span>BREAKING</span></div>
-        <p class="footer-desc">The fastest source for breaking motorcycle news. MotoGP, new models, reviews and everything two wheels.</p>
-      </div>
-      <div>
-        <div class="footer-heading">SECTIONS</div>
-        <ul class="footer-links">
-          <li><a href="#">MotoGP</a></li>
-          <li><a href="#">New Models</a></li>
-          <li><a href="#">Reviews</a></li>
-          <li><a href="#">Electric</a></li>
-          <li><a href="#">Industry</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="footer-heading">RACING</div>
-        <ul class="footer-links">
-          <li><a href="#">MotoGP</a></li>
-          <li><a href="#">World Superbike</a></li>
-          <li><a href="#">British Superbike</a></li>
-          <li><a href="#">Isle of Man TT</a></li>
-          <li><a href="#">Moto2 / Moto3</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="footer-heading">ABOUT</div>
-        <ul class="footer-links">
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Contact</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Advertise</a></li>
-          <li><a href="#">RSS Feed</a></li>
-        </ul>
-      </div>
+    <div style="text-align:center; margin-bottom: 24px;">
+      <div class="footer-heading" style="display:inline-block;">ABOUT</div>
+      <ul class="footer-links" style="display:inline-block; text-align:left;">
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Advertise</a></li>
+        <li><a href="#">RSS Feed</a></li>
+      </ul>
     </div>
     <div class="footer-bottom">
       <span>© 2026 MotoBreaking.com · All rights reserved</span>

@@ -54,7 +54,7 @@
     padding: 0 24px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
   }
   .logo-banner-text {
     font-family: 'Bebas Neue', sans-serif;
@@ -563,28 +563,8 @@
 <div class="logo-banner">
   <div class="logo-banner-inner">
     <div class="logo-banner-text">MOTO <span>BREAKING</span></div>
-    <span class="header-date">{{ date }}</span>
   </div>
 </div>
-
-<header>
-  <div class="header-inner">
-    <div class="logo">MOTO<span>BREAKING</span></div>
-    <nav>
-      <a href="#" class="active">Home</a>
-      <a href="#">MotoGP</a>
-      <a href="#">New Models</a>
-      <a href="#">Reviews</a>
-      <a href="#">Electric</a>
-      <a href="#">Industry</a>
-      <a href="#">Racing</a>
-      <a href="#">Culture</a>
-    </nav>
-    <div class="header-actions">
-      <span class="header-date">{{ date }}</span>
-    </div>
-  </div>
-</header>
 
 {% if articles %}
 <div class="container">
@@ -602,8 +582,6 @@
           <p class="hero-excerpt">{{ first.rewritten_summary }}</p>
           <div class="hero-meta">
             <span class="time">{{ first.published }}</span>
-            <span>·</span>
-            <span>{{ first.source }}</span>
           </div>
         </div>
       </a>
@@ -643,7 +621,6 @@
           <div class="news-card-excerpt">{{ article.rewritten_summary }}</div>
           <div class="news-card-meta">
             <span>{{ article.published }}</span>
-            <span>{{ article.source }}</span>
           </div>
         </div>
       </a>
@@ -666,7 +643,7 @@
             <div class="numbered-item-content">
               <div class="numbered-item-tag"><span class="tag tag-{{ article.category }}">{{ article.category }}</span></div>
               <div class="numbered-item-title">{{ article.rewritten_title }}</div>
-              <div class="numbered-item-meta">{{ article.published }} · {{ article.source }}</div>
+              <div class="numbered-item-meta">{{ article.published }}</div>
             </div>
             {% if article.image %}
             <img class="numbered-item-img" src="{{ article.image }}" alt="">
@@ -699,12 +676,24 @@
 </div>
 {% endif %}
 
-<div class="stats-bar">
-  <div class="stats-inner">
-    <div class="stat-item">
-      <div class="stat-value">24/7</div>
-      <div class="stat-label">Live Coverage</div>
+<div class="container">
+  <footer>
+    <div style="text-align:center; margin-bottom: 24px;">
+      <div class="footer-heading" style="display:inline-block;">ABOUT</div>
+      <ul class="footer-links" style="display:inline-block; text-align:left;">
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Advertise</a></li>
+        <li><a href="#">RSS Feed</a></li>
+      </ul>
     </div>
+    <div class="footer-bottom">
+      <span>© 2026 MotoBreaking.com · All rights reserved</span>
+      <span>Breaking motorcycle news, 24/7</span>
+    </div>
+  </footer>
+</div>
     <div class="stat-item">
       <div class="stat-value">10+</div>
       <div class="stat-label">News Sources</div>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All News – MotoBreaking</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #111111;
+    --bg-card: #161616;
+    --bg-card-hover: #1c1c1c;
+    --text-primary: #f0f0f0;
+    --text-secondary: #a0a0a0;
+    --text-muted: #666;
+    --accent: #e31937;
+    --accent-hover: #ff2244;
+    --border: #222;
+    --border-light: #2a2a2a;
+    --tag-motogp: #e31937;
+    --tag-newmodel: #2d8cf0;
+    --tag-industry: #f5a623;
+    --tag-electric: #22c55e;
+    --tag-review: #a855f7;
+    --tag-culture: #ec4899;
+    --tag-wsbk: #f97316;
+    --tag-bsb: #06b6d4;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg-primary); color: var(--text-primary); font-family: 'Source Sans 3', -apple-system, sans-serif; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  .logo-banner { background: var(--bg-primary); padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .logo-banner-inner { max-width: 1400px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: center; }
+  .logo-banner-text { font-family: 'Bebas Neue', sans-serif; font-size: 48px; letter-spacing: 4px; color: var(--text-primary); line-height: 1; }
+  .logo-banner-text span { color: var(--accent); }
+  header { border-bottom: 1px solid var(--border); background: var(--bg-primary); position: sticky; top: 0; z-index: 100; }
+  .header-inner { max-width: 1400px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; }
+  .logo span { color: var(--accent); }
+  .back-link { color: var(--accent); font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 6px; transition: gap 0.2s; }
+  .back-link:hover { gap: 10px; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+  .section { padding: 40px 0; border-bottom: 1px solid var(--border); }
+  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; display: flex; align-items: center; gap: 12px; }
+  .section-title::before { content: ''; width: 4px; height: 24px; background: var(--accent); border-radius: 2px; }
+  .tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; padding: 4px 10px; border-radius: 3px; display: inline-block; color: #fff; }
+  .tag-motogp { background: var(--tag-motogp); }
+  .tag-newmodel { background: var(--tag-newmodel); }
+  .tag-industry { background: var(--tag-industry); color: #111; }
+  .tag-electric { background: var(--tag-electric); color: #111; }
+  .tag-review { background: var(--tag-review); }
+  .tag-culture { background: var(--tag-culture); }
+  .tag-wsbk { background: var(--tag-wsbk); }
+  .tag-bsb { background: var(--tag-bsb); }
+  .numbered-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; }
+  .numbered-item { display: grid; grid-template-columns: 40px 1fr 100px; gap: 16px; align-items: start; padding: 18px 0; border-bottom: 1px solid var(--border); cursor: pointer; transition: all 0.2s; }
+  .numbered-item:hover { padding-left: 8px; }
+  .numbered-item:hover .numbered-item-title { color: var(--accent); }
+  .item-num { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--text-muted); line-height: 1; }
+  .numbered-item-tag { margin-bottom: 6px; }
+  .numbered-item-title { font-size: 16px; font-weight: 700; line-height: 1.35; transition: color 0.2s; }
+  .numbered-item-meta { margin-top: 6px; font-size: 11px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .numbered-item-img { width: 100px; height: 68px; object-fit: cover; border-radius: 6px; }
+  footer { padding: 48px 0 32px; border-top: 1px solid var(--border); }
+  .footer-bottom { text-align: center; font-size: 12px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  @media (max-width: 1024px) { .numbered-list { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { .numbered-item { grid-template-columns: 32px 1fr; } .numbered-item-img { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="logo-banner">
+  <div class="logo-banner-inner">
+    <div class="logo-banner-text">MOTO <span>BREAKING</span></div>
+  </div>
+</div>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">MOTO<span>BREAKING</span></div>
+    <a href="index.html" class="back-link">← Back to Home</a>
+  </div>
+</header>
+
+<div class="container">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">ALL NEWS</div>
+    </div>
+    <div class="numbered-list">
+      {% for article in articles %}
+      <a href="news/{{ article.unique_id }}.html" class="numbered-item">
+        <div class="item-num">{{ "%02d"|format(loop.index) }}</div>
+        <div class="numbered-item-content">
+          <div class="numbered-item-tag"><span class="tag tag-{{ article.category }}">{{ article.category }}</span></div>
+          <div class="numbered-item-title">{{ article.rewritten_title }}</div>
+          <div class="numbered-item-meta">{{ article.rewritten_summary[:120] }}...</div>
+        </div>
+        {% if article.image %}
+        <img class="numbered-item-img" src="{{ article.image }}" alt="">
+        {% endif %}
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-bottom">© 2026 MotoBreaking.com · All rights reserved</div>
+  </div>
+</footer>
+
+</body>
+</html>

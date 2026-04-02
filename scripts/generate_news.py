@@ -150,10 +150,13 @@ def generate_html(articles):
     article_template = env.get_template("article.html")
     
     for article in articles:
+        # Get related articles (exclude current article)
+        related = [a for a in articles if a['unique_id'] != article['unique_id']]
         html = article_template.render(
             article=article,
             title=article.get("rewritten_title", article["title"]),
-            year=datetime.now().year
+            year=datetime.now().year,
+            related_articles=related[:6]
         )
         filepath = f"news/{article['unique_id']}.html"
         with open(filepath, "w", encoding="utf-8") as f:
@@ -171,6 +174,14 @@ def generate_html(articles):
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(html)
     print(f"  Created: index.html ({len(articles)} articles)")
+    
+    # Generate all.html - full list of all articles
+    all_template = env.get_template("all.html")
+    html_all = all_template.render(articles=articles)
+    
+    with open("all.html", "w", encoding="utf-8") as f:
+        f.write(html_all)
+    print(f"  Created: all.html ({len(articles)} articles)")
 
 
 def main():

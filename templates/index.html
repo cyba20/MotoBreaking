@@ -604,7 +604,6 @@
   <div class="section">
     <div class="section-header">
       <div class="section-title">TOP STORIES</div>
-      <a href="#" class="section-link">View all</a>
     </div>
     <div class="news-grid">
       {% for article in articles[5:8] %}
@@ -630,9 +629,10 @@
       <div>
         <div class="section-header">
           <div class="section-title">MORE NEWS</div>
+          <a href="all.html" class="section-link">View all</a>
         </div>
         <div class="numbered-list">
-          {% for article in articles[8:] %}
+          {% for article in articles[8:18] %}
           <a href="news/{{ article.unique_id }}.html" class="numbered-item">
             <div class="item-num">{{ "%02d"|format(loop.index) }}</div>
             <div class="numbered-item-content">
